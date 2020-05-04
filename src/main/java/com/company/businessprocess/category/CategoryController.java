@@ -1,11 +1,11 @@
 package com.company.businessprocess.category;
 
+import com.company.businessprocess.dto.CategoryResponse;
 import com.company.businessprocess.entity.CategoryEntity;
+import com.company.businessprocess.entity.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -21,7 +21,22 @@ public class CategoryController {
     }
 
     @GetMapping("/get-all-category")
-    public ResponseEntity<Collection<CategoryEntity>> getAllCategories() {
+    public ResponseEntity<Collection<CategoryResponse>> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategory());
+    }
+    @PostMapping
+    public ResponseEntity<CategoryEntity> insertCategory(CategoryEntity newEntity) {
+        return ResponseEntity.ok(categoryService.addCategory(newEntity));
+    }
+
+    @PutMapping
+    public ResponseEntity<CategoryEntity> updateCategory(Integer id, CategoryEntity updateEntity) {
+        return ResponseEntity.ok(categoryService.updateCategory(id, updateEntity));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteCategory(Integer id) {
+        categoryService.deleteCategory(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

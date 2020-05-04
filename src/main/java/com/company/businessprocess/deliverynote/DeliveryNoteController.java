@@ -1,13 +1,12 @@
 package com.company.businessprocess.deliverynote;
 
 import com.company.businessprocess.customer.CustomerService;
+import com.company.businessprocess.dto.DeliveryNoteResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import com.company.businessprocess.entity.DeliverynoteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,7 +21,22 @@ public class DeliveryNoteController {
     }
 
     @GetMapping("/get-all-deliverynote")
-    public ResponseEntity<Collection<DeliverynoteEntity>> getAllDeliveryNote() {
+    public ResponseEntity<Collection<DeliveryNoteResponse>> getAllDeliveryNote() {
         return ResponseEntity.ok(deliveryNoteService.getAllDeliveryNote());
+    }
+    @PostMapping
+    public ResponseEntity<DeliverynoteEntity> insertDeliveryNote(DeliverynoteEntity newEntity) {
+        return ResponseEntity.ok(deliveryNoteService.addDeliveryNote(newEntity));
+    }
+
+    @PutMapping
+    public ResponseEntity<DeliverynoteEntity> updateDeliveryNote(Integer id, DeliverynoteEntity updateEntity) {
+        return ResponseEntity.ok(deliveryNoteService.updateDeliveryNote(id, updateEntity));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteDeliveryNote(Integer id) {
+        deliveryNoteService.deleteDeliveryNote(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

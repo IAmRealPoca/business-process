@@ -1,21 +1,33 @@
 package com.company.businessprocess.staff;
 
+
+import com.company.businessprocess.dto.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class StaffServiceImpl implements StaffService {
     private StaffRepository staffRepository;
+    private ModelMapper mapper;
 
-    public StaffServiceImpl(StaffRepository staffRepository) {
+    @Autowired
+    public StaffServiceImpl(StaffRepository staffRepository, ModelMapper mapper) {
         this.staffRepository = staffRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Collection<StaffEntity> getAllStaff() {
-        return staffRepository.findAll();
+    public Collection<StaffResponse> getAllStaff() {
+        Collection<StaffResponse> responses =
+                staffRepository.findAll().stream()
+                        .map(staffEntity -> mapper.map(staffEntity, StaffResponse.class))
+                        .collect(Collectors.toList());
+        return responses;
     }
 
     @Override

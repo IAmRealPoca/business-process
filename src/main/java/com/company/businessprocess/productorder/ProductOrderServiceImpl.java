@@ -1,23 +1,31 @@
 package com.company.businessprocess.productorder;
 
-import com.company.businessprocess.deliverynote.DeliveryNoteRepository;
+import com.company.businessprocess.dto.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
     private ProductOrderRepository productOrderRepository;
+    private ModelMapper mapper;
 
 
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ModelMapper mapper) {
         this.productOrderRepository = productOrderRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Collection<ProductorderEntity> getAllProductOrder() {
-        return productOrderRepository.findAll();
+    public Collection<ProductOrderResponse> getAllProductOrder() {
+        Collection<ProductOrderResponse> productOrderResponses =
+                productOrderRepository.findAll().stream()
+                        .map(productorderEntity -> mapper.map(productorderEntity, ProductOrderResponse.class))
+                        .collect(Collectors.toList());
+        return productOrderResponses;
     }
 
     @Override

@@ -1,13 +1,13 @@
 package com.company.businessprocess.productorder;
 
 import com.company.businessprocess.deliverynote.DeliveryNoteService;
+import com.company.businessprocess.dto.ProductOrderResponse;
 import com.company.businessprocess.entity.DeliverynoteEntity;
+import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProductorderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,7 +22,23 @@ public class ProductOrderController {
     }
 
     @GetMapping("/get-all-productorder")
-    public ResponseEntity<Collection<ProductorderEntity>> getAllProductOrder() {
+    public ResponseEntity<Collection<ProductOrderResponse>> getAllProductOrder() {
         return ResponseEntity.ok(productOrderService.getAllProductOrder());
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductorderEntity> insertProductOrder(ProductorderEntity newEntity) {
+        return ResponseEntity.ok(productOrderService.addProductOrder(newEntity));
+    }
+
+    @PutMapping
+    public ResponseEntity<ProductorderEntity> updateProductOrder(Integer id, ProductorderEntity updateEntity) {
+        return ResponseEntity.ok(productOrderService.updateProductOrder(id, updateEntity));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteProductOrder(Integer id) {
+        productOrderService.deleteProductOrder(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

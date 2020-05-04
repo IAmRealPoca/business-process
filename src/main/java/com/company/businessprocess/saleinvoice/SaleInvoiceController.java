@@ -1,13 +1,12 @@
 package com.company.businessprocess.saleinvoice;
 
+import com.company.businessprocess.dto.SaleInvoiceResponse;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
 import com.company.businessprocess.receivingnote.ReceivingNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,7 +21,22 @@ public class SaleInvoiceController {
     }
 
     @GetMapping("/get-all-saleinvoice")
-    public ResponseEntity<Collection<SaleinvoiceEntity>> getAllSaleInvoice() {
+    public ResponseEntity<Collection<SaleInvoiceResponse>> getAllSaleInvoice() {
         return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice());
+    }
+    @PostMapping
+    public ResponseEntity<SaleinvoiceEntity> insertSaleInvoice(SaleinvoiceEntity newEntity) {
+        return ResponseEntity.ok(saleInvoiceService.addSaleInvoice(newEntity));
+    }
+
+    @PutMapping
+    public ResponseEntity<SaleinvoiceEntity> udpateSaleInvoice(Integer id, SaleinvoiceEntity updateEntity) {
+        return ResponseEntity.ok(saleInvoiceService.updateSaleInvoice(id, updateEntity));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteSaleInvoice(Integer id) {
+        saleInvoiceService.deleteSaleInvoice(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

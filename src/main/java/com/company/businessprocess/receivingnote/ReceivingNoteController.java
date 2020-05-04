@@ -1,13 +1,12 @@
 package com.company.businessprocess.receivingnote;
 
+import com.company.businessprocess.dto.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import com.company.businessprocess.productorder.ProductOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,7 +21,22 @@ public class ReceivingNoteController {
     }
 
     @GetMapping("/get-all-receivingnote")
-    public ResponseEntity<Collection<ReceivingnoteEntity>> getAllReceivingNote() {
+    public ResponseEntity<Collection<ReceivingNoteResponse>> getAllReceivingNote() {
         return ResponseEntity.ok(receivingNoteService.getAllReceivingNote());
+    }
+    @PostMapping
+    public ResponseEntity<ReceivingnoteEntity> insertReceivingNote(ReceivingnoteEntity newEntity) {
+        return ResponseEntity.ok(receivingNoteService.addReceivingNote(newEntity));
+    }
+
+    @PutMapping
+    public ResponseEntity<ReceivingnoteEntity> updateReceivingNote(Integer id, ReceivingnoteEntity updateEntity) {
+        return ResponseEntity.ok(receivingNoteService.updateReceivingNote(id, updateEntity));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteReceivingNote(Integer id) {
+        receivingNoteService.deleteReceivingNote(id);
+        return ResponseEntity.ok("Deleted");
     }
 }

@@ -1,22 +1,31 @@
 package com.company.businessprocess.deliverynote;
 
 
+import com.company.businessprocess.dto.DeliveryNoteResponse;
 import com.company.businessprocess.entity.DeliverynoteEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class DeliveryNoteServiceImpl implements DeliveryNoteService {
     private DeliveryNoteRepository deliveryNoteRepository;
+    private ModelMapper mapper;
 
-    public DeliveryNoteServiceImpl(DeliveryNoteRepository deliveryNoteRepository) {
+    public DeliveryNoteServiceImpl(DeliveryNoteRepository deliveryNoteRepository, ModelMapper mapper) {
         this.deliveryNoteRepository = deliveryNoteRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Collection<DeliverynoteEntity> getAllDeliveryNote() {
-        return deliveryNoteRepository.findAll();
+    public Collection<DeliveryNoteResponse> getAllDeliveryNote() {
+        Collection<DeliveryNoteResponse> deliveryNoteResponses =
+                deliveryNoteRepository.findAll().stream()
+                        .map(deliverynoteEntity -> mapper.map(deliverynoteEntity, DeliveryNoteResponse.class))
+                        .collect(Collectors.toList());
+        return deliveryNoteResponses;
     }
 
     @Override
