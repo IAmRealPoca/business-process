@@ -21,14 +21,15 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public ProductorderEntity addDeliveryNote(ProductorderEntity newEntity) {
+    public ProductorderEntity addProductOrder(ProductorderEntity newEntity) {
         return productOrderRepository.save(newEntity);
     }
 
     @Override
-    public ProductorderEntity updateDeliveryNote(Integer Id, ProductorderEntity updateEntity) {
+    public ProductorderEntity updateProductOrder(Integer id, ProductorderEntity updateEntity) {
         return productOrderRepository.save(updateEntity);
     }
+    
 
     @Override
     public void deleteProductOrder(Integer id) {

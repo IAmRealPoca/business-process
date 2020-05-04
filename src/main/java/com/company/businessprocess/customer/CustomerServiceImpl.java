@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity updateCustomer(Integer Id, CustomerEntity updateEntity) {
+    public CustomerEntity updateCustomer(Integer id, CustomerEntity updateEntity) {
         return customerRepository.save(updateEntity);
     }
 
