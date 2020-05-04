@@ -25,7 +25,7 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
     }
 
     @Override
-    public DeliverynoteEntity updateDeliveryNote(Integer Id, DeliverynoteEntity updateEntity) {
+    public DeliverynoteEntity updateDeliveryNote(Integer id, DeliverynoteEntity updateEntity) {
         return deliveryNoteRepository.save(updateEntity);
     }
 

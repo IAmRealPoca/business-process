@@ -7,7 +7,7 @@ import java.util.Collection;
 public interface CustomerService {
     Collection<CustomerEntity> getAllCustomer();
     CustomerEntity addCustomer(CustomerEntity newEntity);
-    CustomerEntity updateCustomer (Integer Id, CustomerEntity updateEntity);
-    void deleteCustomer (Integer Id);
+    CustomerEntity updateCustomer (Integer id, CustomerEntity updateEntity);
+    void deleteCustomer (Integer id);
 
 }
