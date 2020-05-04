@@ -1,21 +1,30 @@
 package com.company.businessprocess.customer;
 
+import com.company.businessprocess.dto.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
+    private ModelMapper mapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper mapper) {
         this.customerRepository = customerRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Collection<CustomerEntity> getAllCustomer() {
-        return customerRepository.findAll();
+    public Collection<CustomerResponse> getAllCustomer() {
+        Collection<CustomerResponse> customerResponses =
+                customerRepository.findAll().stream()
+                .map(customerEntity -> mapper.map(customerEntity, CustomerResponse.class))
+                .collect(Collectors.toList());
+        return customerResponses;
     }
 
     @Override

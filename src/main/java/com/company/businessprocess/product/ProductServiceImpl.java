@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity addProduct(ProductEntity newEntity) {
-        return null;
+        return productRepository.save(newEntity);
     }
 
     @Override

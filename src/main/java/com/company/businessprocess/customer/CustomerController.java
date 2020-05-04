@@ -1,5 +1,6 @@
 package com.company.businessprocess.customer;
 
+import com.company.businessprocess.dto.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CustomerController {
     }
 
     @GetMapping ("/get-all-customer")
-    public ResponseEntity<Collection<CustomerEntity>> getAllCustomer() {
+    public ResponseEntity<Collection<CustomerResponse>> getAllCustomer() {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
 }
