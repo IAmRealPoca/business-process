@@ -1,5 +1,6 @@
 package com.company.businessprocess.deliverynote;
 
+import com.company.businessprocess.dto.request.DeliveryNoteRequest;
 import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 import com.company.businessprocess.entity.DeliverynoteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class DeliveryNoteController {
         return ResponseEntity.ok(deliveryNoteService.getAllDeliveryNote());
     }
     @PostMapping
-    public ResponseEntity<DeliverynoteEntity> insertDeliveryNote(DeliverynoteEntity newEntity) {
-        return ResponseEntity.ok(deliveryNoteService.addDeliveryNote(newEntity));
+    public ResponseEntity<DeliverynoteEntity> insertDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
+        return ResponseEntity.ok(deliveryNoteService.addDeliveryNote(newDeliveryNote));
     }
 
     @PutMapping

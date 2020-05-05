@@ -1,5 +1,6 @@
 package com.company.businessprocess.category;
 
+import com.company.businessprocess.dto.request.CategoryRequest;
 import com.company.businessprocess.dto.response.CategoryResponse;
 import com.company.businessprocess.entity.CategoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }
     @PostMapping
-    public ResponseEntity<CategoryEntity> insertCategory(CategoryEntity newEntity) {
-        return ResponseEntity.ok(categoryService.addCategory(newEntity));
+    public ResponseEntity<CategoryEntity> insertCategory(CategoryRequest newCategory) {
+        return ResponseEntity.ok(categoryService.addCategory(newCategory));
     }
 
     @PutMapping
+
     public ResponseEntity<CategoryEntity> updateCategory(Integer id, CategoryEntity updateEntity) {
         return ResponseEntity.ok(categoryService.updateCategory(id, updateEntity));
     }

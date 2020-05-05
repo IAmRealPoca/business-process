@@ -1,5 +1,6 @@
 package com.company.businessprocess.provider;
 
+import com.company.businessprocess.dto.request.ProviderRequest;
 import com.company.businessprocess.dto.response.ProviderResponse;
 import com.company.businessprocess.entity.ProviderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class ProviderController {
         return ResponseEntity.ok(providerService.getAllProvider());
     }
     @PostMapping
-    public ResponseEntity<ProviderEntity> insertProvider(ProviderEntity newEntity) {
-        return ResponseEntity.ok(providerService.addProvider(newEntity));
+    public ResponseEntity<ProviderEntity> insertProvider(ProviderRequest newProvider) {
+        return ResponseEntity.ok(providerService.addProvider(newProvider));
     }
 
     @PutMapping

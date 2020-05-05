@@ -1,5 +1,6 @@
 package com.company.businessprocess.customer;
 
+import com.company.businessprocess.dto.request.CustomerRequest;
 import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
     @PostMapping
-    public ResponseEntity<CustomerEntity> insertCustomer(CustomerEntity newEntity) {
-        return ResponseEntity.ok(customerService.addCustomer(newEntity));
+    public ResponseEntity<CustomerEntity> insertCustomer(CustomerRequest newCustomer) {
+        return ResponseEntity.ok(customerService.addCustomer(newCustomer));
     }
 
     @PutMapping

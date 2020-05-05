@@ -1,6 +1,7 @@
 package com.company.businessprocess.deliverynote;
 
 
+import com.company.businessprocess.dto.request.DeliveryNoteRequest;
 import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 import com.company.businessprocess.entity.DeliverynoteEntity;
 import org.modelmapper.ModelMapper;
@@ -29,7 +30,8 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
     }
 
     @Override
-    public DeliverynoteEntity addDeliveryNote(DeliverynoteEntity newEntity) {
+    public DeliverynoteEntity addDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
+        DeliverynoteEntity newEntity = mapper.map(newDeliveryNote, DeliverynoteEntity.class);
         return deliveryNoteRepository.save(newEntity);
     }
 

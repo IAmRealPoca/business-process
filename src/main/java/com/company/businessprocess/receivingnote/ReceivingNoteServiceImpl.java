@@ -1,5 +1,6 @@
 package com.company.businessprocess.receivingnote;
 
+import com.company.businessprocess.dto.request.ReceivingNoteRequest;
 import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import org.modelmapper.ModelMapper;
@@ -29,7 +30,8 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
     }
 
     @Override
-    public ReceivingnoteEntity addReceivingNote(ReceivingnoteEntity newEntity) {
+    public ReceivingnoteEntity addReceivingNote(ReceivingNoteRequest newReceivingNote) {
+        ReceivingnoteEntity newEntity = mapper.map(newReceivingNote, ReceivingnoteEntity.class);
         return receivingNoteRepository.save(newEntity);
     }
 

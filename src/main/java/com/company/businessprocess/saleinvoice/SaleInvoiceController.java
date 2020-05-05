@@ -1,5 +1,6 @@
 package com.company.businessprocess.saleinvoice;
 
+import com.company.businessprocess.dto.request.SaleInvoiceRequest;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class SaleInvoiceController {
         return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice());
     }
     @PostMapping
-    public ResponseEntity<SaleinvoiceEntity> insertSaleInvoice(SaleinvoiceEntity newEntity) {
-        return ResponseEntity.ok(saleInvoiceService.addSaleInvoice(newEntity));
+    public ResponseEntity<SaleinvoiceEntity> insertSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
+        return ResponseEntity.ok(saleInvoiceService.addSaleInvoice(newSaleInvoice));
     }
 
     @PutMapping
