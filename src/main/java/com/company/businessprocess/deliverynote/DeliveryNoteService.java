@@ -1,6 +1,6 @@
 package com.company.businessprocess.deliverynote;
 
-import com.company.businessprocess.dto.DeliveryNoteResponse;
+import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 import com.company.businessprocess.entity.DeliverynoteEntity;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.company.businessprocess.dto;
+package com.company.businessprocess.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

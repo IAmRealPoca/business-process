@@ -1,9 +1,7 @@
 package com.company.businessprocess.provider;
 
-import com.company.businessprocess.dto.ProviderResponse;
-import com.company.businessprocess.entity.ProductorderEntity;
+import com.company.businessprocess.dto.response.ProviderResponse;
 import com.company.businessprocess.entity.ProviderEntity;
-import com.company.businessprocess.productorder.ProductOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

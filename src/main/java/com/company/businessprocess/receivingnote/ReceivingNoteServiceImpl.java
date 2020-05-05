@@ -1,6 +1,6 @@
 package com.company.businessprocess.receivingnote;
 
-import com.company.businessprocess.dto.ReceivingNoteResponse;
+import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.company.businessprocess.product;
 
-import com.company.businessprocess.dto.ProductResponse;
+import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.ProductEntity;
 
 import java.util.Collection;

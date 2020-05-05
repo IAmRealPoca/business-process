@@ -1,9 +1,7 @@
 package com.company.businessprocess.saleinvoice;
 
-import com.company.businessprocess.dto.SaleInvoiceResponse;
-import com.company.businessprocess.entity.ReceivingnoteEntity;
+import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
-import com.company.businessprocess.receivingnote.ReceivingNoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

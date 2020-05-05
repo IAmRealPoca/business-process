@@ -1,8 +1,7 @@
 package com.company.businessprocess.category;
 
-import com.company.businessprocess.dto.CategoryResponse;
+import com.company.businessprocess.dto.response.CategoryResponse;
 import com.company.businessprocess.entity.CategoryEntity;
-import com.company.businessprocess.entity.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.company.businessprocess.saleinvoice;
 
-import com.company.businessprocess.dto.SaleInvoiceResponse;
+import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.company.businessprocess.product;
 
-import com.company.businessprocess.dto.ProductResponse;
+import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

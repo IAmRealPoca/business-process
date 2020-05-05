@@ -1,4 +1,4 @@
-package com.company.businessprocess.dto;
+package com.company.businessprocess.dto.response;
 
 import com.company.businessprocess.entity.CategoryEntity;
 import com.company.businessprocess.entity.DeliverynoteEntity;

@@ -1,6 +1,6 @@
 package com.company.businessprocess.product;
 
-import com.company.businessprocess.dto.ProductResponse;
+import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.ProductEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity updateProduct(Integer id, ProductEntity updateEntity) {
+
         return null;
     }
 

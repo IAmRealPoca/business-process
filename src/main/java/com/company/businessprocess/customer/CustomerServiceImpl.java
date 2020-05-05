@@ -1,6 +1,6 @@
 package com.company.businessprocess.customer;
 
-import com.company.businessprocess.dto.CustomerResponse;
+import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

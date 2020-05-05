@@ -1,7 +1,7 @@
 package com.company.businessprocess.staff;
 
 
-import com.company.businessprocess.dto.StaffResponse;
+import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

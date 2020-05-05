@@ -1,6 +1,6 @@
 package com.company.businessprocess.productorder;
 
-import com.company.businessprocess.dto.ProductOrderResponse;
+import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
 
 import java.util.Collection;

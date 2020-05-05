@@ -1,6 +1,6 @@
 package com.company.businessprocess.provider;
 
-import com.company.businessprocess.dto.ProviderResponse;
+import com.company.businessprocess.dto.response.ProviderResponse;
 import com.company.businessprocess.entity.ProviderEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,7 @@
 package com.company.businessprocess.staff;
 
-import com.company.businessprocess.dto.StaffResponse;
-import com.company.businessprocess.entity.ProductEntity;
-import com.company.businessprocess.entity.SaleinvoiceEntity;
+import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
-import com.company.businessprocess.saleinvoice.SaleInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

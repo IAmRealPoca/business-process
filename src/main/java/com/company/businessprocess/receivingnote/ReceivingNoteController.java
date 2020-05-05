@@ -1,9 +1,7 @@
 package com.company.businessprocess.receivingnote;
 
-import com.company.businessprocess.dto.ReceivingNoteResponse;
-import com.company.businessprocess.entity.ProductorderEntity;
+import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
-import com.company.businessprocess.productorder.ProductOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

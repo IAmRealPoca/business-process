@@ -1,8 +1,7 @@
 package com.company.businessprocess.customer;
 
-import com.company.businessprocess.dto.CustomerResponse;
+import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
-import com.company.businessprocess.entity.ProductEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

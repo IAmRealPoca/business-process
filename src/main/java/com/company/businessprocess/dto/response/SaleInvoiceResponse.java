@@ -1,4 +1,4 @@
-package com.company.businessprocess.dto;
+package com.company.businessprocess.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,13 +7,13 @@ import lombok.Setter;
 
 import java.sql.Date;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductOrderResponse {
-    private Integer orderId;
-    private Date orderDate;
+public class SaleInvoiceResponse {
+    private Integer saleId;
+    private Date saleDate;
     private Integer quantity;
+    private Integer totalValue;
 }

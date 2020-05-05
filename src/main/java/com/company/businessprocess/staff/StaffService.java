@@ -1,7 +1,6 @@
 package com.company.businessprocess.staff;
 
-import com.company.businessprocess.dto.StaffResponse;
-import com.company.businessprocess.entity.SaleinvoiceEntity;
+import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
 
 import java.util.Collection;

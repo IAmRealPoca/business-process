@@ -1,8 +1,6 @@
 package com.company.businessprocess.deliverynote;
 
-import com.company.businessprocess.customer.CustomerService;
-import com.company.businessprocess.dto.DeliveryNoteResponse;
-import com.company.businessprocess.entity.CustomerEntity;
+import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 import com.company.businessprocess.entity.DeliverynoteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
