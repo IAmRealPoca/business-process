@@ -66,7 +66,7 @@ public class CategoryEntity {
     }
 
     public void mergeToUpdate(Object updateObject) {
-        if (!(updateObject instanceof CategoryEntity) || !(updateObject instanceof CategoryRequest)) {
+        if (!(updateObject instanceof CategoryRequest)) {
             return;
         }
         CategoryRequest categoryRequest = (CategoryRequest) updateObject;

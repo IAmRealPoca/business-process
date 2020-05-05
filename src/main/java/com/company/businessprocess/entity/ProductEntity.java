@@ -168,7 +168,7 @@ public class ProductEntity {
     }
 
     public void mergeToUpdate(Object updateObject) {
-        if (!(updateObject instanceof ProductEntity) || !(updateObject instanceof ProductRequest)) {
+        if (!(updateObject instanceof ProductRequest)) {
             return;
         }
         ProductRequest productRequest = (ProductRequest) updateObject;

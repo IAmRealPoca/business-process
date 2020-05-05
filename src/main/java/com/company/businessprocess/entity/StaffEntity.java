@@ -133,7 +133,7 @@ public class StaffEntity {
     }
 
     public void mergeToUpdate(Object updateObject) {
-        if (!(updateObject instanceof StaffEntity) || !(updateObject instanceof StaffRequest)) {
+        if (!(updateObject instanceof StaffRequest)) {
             return;
         }
         StaffRequest staffRequest = (StaffRequest) updateObject;

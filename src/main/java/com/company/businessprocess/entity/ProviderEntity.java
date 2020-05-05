@@ -127,7 +127,7 @@ public class ProviderEntity {
     }
 
     public void mergeToUpdate(Object updateObject) {
-        if (!(updateObject instanceof ProviderEntity) || !(updateObject instanceof ProviderRequest)) {
+        if (!(updateObject instanceof ProviderRequest)) {
             return;
         }
         ProviderRequest providerRequest = (ProviderRequest) updateObject;

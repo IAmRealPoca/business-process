@@ -137,7 +137,7 @@ public class CustomerEntity {
     }
 
     public void mergeToUpdate(Object updateObject) {
-        if (!(updateObject instanceof CustomerEntity) || !(updateObject instanceof CustomerRequest)) {
+        if (!(updateObject instanceof CustomerRequest)) {
             return;
         }
         CustomerRequest customerRequest = (CustomerRequest) updateObject;
