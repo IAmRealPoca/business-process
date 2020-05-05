@@ -7,13 +7,15 @@ import com.company.businessprocess.entity.CategoryEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProviderEntity;
 import com.company.businessprocess.provider.ProviderRepository;
-import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,11 +36,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Collection<ProductResponse> getAllProduct() {
-        Collection<ProductResponse> responses =
-                productRepository.findAll().stream()
-                .map(productEntity -> mapper.map(productEntity, ProductResponse.class))
-                .collect(Collectors.toList());
+    public Page<ProductResponse> getAllProduct(Pageable pageable) {
+        Page<ProductEntity> results = productRepository.findAll(pageable);
+        Page<ProductResponse> responses =
+                results.map(productEntity -> mapper.map(productEntity, ProductResponse.class));
+//                .map()
+//                .collect(Collectors.toList());
+//        Page<ProductResponse> pageResult = new PageImpl<>((List<ProductResponse>) responses, pageable, responses.size());
         return responses;
     }
 
