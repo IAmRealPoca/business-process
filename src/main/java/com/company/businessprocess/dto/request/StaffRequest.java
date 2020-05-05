@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StaffRequest {
-    private Integer staffId;
     private String name;
     private String address;
     private Integer phone;
