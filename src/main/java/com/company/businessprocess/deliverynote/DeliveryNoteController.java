@@ -24,7 +24,7 @@ public class DeliveryNoteController {
         return ResponseEntity.ok(deliveryNoteService.getAllDeliveryNote());
     }
     @PostMapping
-    public ResponseEntity<DeliverynoteEntity> insertDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
+    public ResponseEntity<DeliveryNoteResponse> insertDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
         return ResponseEntity.ok(deliveryNoteService.addDeliveryNote(newDeliveryNote));
     }
 

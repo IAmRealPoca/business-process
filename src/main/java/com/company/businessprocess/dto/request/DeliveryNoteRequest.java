@@ -10,5 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeliveryNoteRequest {
+    private Integer productId;
+    private Integer customerId;
+    private Integer staffId;
     private Integer quantity;
 }

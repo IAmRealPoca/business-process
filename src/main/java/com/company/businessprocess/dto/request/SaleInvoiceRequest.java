@@ -12,6 +12,9 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaleInvoiceRequest {
+    private Integer productId;
+    private Integer customerId;
+    private Integer staffId;
     private Date saleDate;
     private Integer quantity;
     private Integer totalValue;

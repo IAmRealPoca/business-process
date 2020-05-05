@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface DeliveryNoteService {
     Collection<DeliveryNoteResponse> getAllDeliveryNote();
-    DeliverynoteEntity addDeliveryNote(DeliveryNoteRequest newDeliveryNote);
+    DeliveryNoteResponse addDeliveryNote(DeliveryNoteRequest newDeliveryNote);
     DeliverynoteEntity updateDeliveryNote (Integer id, DeliverynoteEntity updateEntity);
     void deleteDeliveryNote (Integer id);
 }

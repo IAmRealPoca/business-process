@@ -9,7 +9,7 @@ import java.util.Collection;
 public interface ProductService {
     Collection<ProductResponse> getAllProduct();
 
-    ProductEntity addProduct(ProductRequest newProduct);
+    ProductResponse addProduct(ProductRequest newProduct);
 
     ProductEntity updateProduct(Integer id, ProductEntity updateEntity);
 

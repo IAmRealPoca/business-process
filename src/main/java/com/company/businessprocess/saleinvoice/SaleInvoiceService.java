@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface SaleInvoiceService {
     Collection<SaleInvoiceResponse> getAllSaleInvoice();
-    SaleinvoiceEntity addSaleInvoice(SaleInvoiceRequest newSaleInvoice);
+    SaleInvoiceResponse addSaleInvoice(SaleInvoiceRequest newSaleInvoice);
     SaleinvoiceEntity updateSaleInvoice (Integer id, SaleinvoiceEntity updateEntity);
     void deleteSaleInvoice (Integer id);
 }

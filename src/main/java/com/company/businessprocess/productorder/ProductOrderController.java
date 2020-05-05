@@ -25,7 +25,7 @@ public class ProductOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductorderEntity> insertProductOrder(ProductOrderRequest newProductOrder) {
+    public ResponseEntity<ProductOrderResponse> insertProductOrder(ProductOrderRequest newProductOrder) {
         return ResponseEntity.ok(productOrderService.addProductOrder(newProductOrder));
     }
 

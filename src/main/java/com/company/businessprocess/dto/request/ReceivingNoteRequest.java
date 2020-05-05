@@ -12,6 +12,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReceivingNoteRequest {
+    private Integer staffId;
+    private Integer productId;
     private Date receiveDate;
     private Integer quantity;
 }

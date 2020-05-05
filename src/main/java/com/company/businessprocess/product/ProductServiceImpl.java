@@ -40,13 +40,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity addProduct(ProductRequest newProduct) {
+    public ProductResponse addProduct(ProductRequest newProduct) {
         ProductEntity newEntity = mapper.map(newProduct, ProductEntity.class);
         ProviderEntity company = providerRepository.getOne(newProduct.getCompanyId());
         CategoryEntity category = categoryRepository.getOne(newProduct.getCategoryId());
         newEntity.setProviderByCompany(company);
         newEntity.setCategoryByCategoryId(category);
-        return productRepository.save(newEntity);
+        return mapper.map(productRepository.save(newEntity), ProductResponse.class);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class SaleInvoiceController {
         return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice());
     }
     @PostMapping
-    public ResponseEntity<SaleinvoiceEntity> insertSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
+    public ResponseEntity<SaleInvoiceResponse> insertSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
         return ResponseEntity.ok(saleInvoiceService.addSaleInvoice(newSaleInvoice));
     }
 

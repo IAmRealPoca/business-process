@@ -1,8 +1,15 @@
 package com.company.businessprocess.saleinvoice;
 
+import com.company.businessprocess.customer.CustomerRepository;
 import com.company.businessprocess.dto.request.SaleInvoiceRequest;
+import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
+import com.company.businessprocess.entity.CustomerEntity;
+import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
+import com.company.businessprocess.entity.StaffEntity;
+import com.company.businessprocess.product.ProductRepository;
+import com.company.businessprocess.staff.StaffRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +20,16 @@ import java.util.stream.Collectors;
 public class SaleInvoiceServiceImpl implements SaleInvoiceService {
 
     private SaleInvoiceRepository saleInvoiceRepository;
+    private ProductRepository productRepository;
+    private CustomerRepository customerRepository;
+    private StaffRepository staffRepository;
     private ModelMapper mapper;
 
-    public SaleInvoiceServiceImpl(SaleInvoiceRepository saleInvoiceRepository, ModelMapper mapper) {
+    public SaleInvoiceServiceImpl(SaleInvoiceRepository saleInvoiceRepository, ProductRepository productRepository, CustomerRepository customerRepository, StaffRepository staffRepository, ModelMapper mapper) {
         this.saleInvoiceRepository = saleInvoiceRepository;
+        this.productRepository = productRepository;
+        this.customerRepository = customerRepository;
+        this.staffRepository = staffRepository;
         this.mapper = mapper;
     }
 
@@ -30,9 +43,15 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
     }
 
     @Override
-    public SaleinvoiceEntity addSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
+    public SaleInvoiceResponse addSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
         SaleinvoiceEntity newEntity = mapper.map(newSaleInvoice, SaleinvoiceEntity.class);
-        return saleInvoiceRepository.save(newEntity);
+        ProductEntity product = productRepository.getOne(newSaleInvoice.getProductId());
+        newEntity.setProductByProductId(product);
+        StaffEntity staff = staffRepository.getOne(newSaleInvoice.getStaffId());
+        newEntity.setStaffByStaffId(staff);
+        CustomerEntity customer = customerRepository.getOne(newSaleInvoice.getCustomerId());
+        newEntity.setCustomerByCustomerId(customer);
+        return mapper.map(saleInvoiceRepository.save(newEntity), SaleInvoiceResponse.class);
     }
 
     @Override

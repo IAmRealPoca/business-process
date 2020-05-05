@@ -24,7 +24,7 @@ public class ReceivingNoteController {
         return ResponseEntity.ok(receivingNoteService.getAllReceivingNote());
     }
     @PostMapping
-    public ResponseEntity<ReceivingnoteEntity> insertReceivingNote(ReceivingNoteRequest newReceivingNote) {
+    public ResponseEntity<ReceivingNoteResponse> insertReceivingNote(ReceivingNoteRequest newReceivingNote) {
         return ResponseEntity.ok(receivingNoteService.addReceivingNote(newReceivingNote));
     }
 
