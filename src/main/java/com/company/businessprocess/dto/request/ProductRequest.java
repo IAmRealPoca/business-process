@@ -10,7 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductRequest {
-    private Integer productId;
+    private Integer companyId;
+    private Integer categoryId;
     private String name;
     private String model;
     private String brand;

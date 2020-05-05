@@ -3,6 +3,8 @@ package com.company.businessprocess.entity;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,6 +31,7 @@ public class ProductEntity {
 
     @Id
     @Column(name = "productId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getProductId() {
         return productId;
     }

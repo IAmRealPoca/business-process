@@ -1,9 +1,12 @@
 package com.company.businessprocess.product;
 
+import com.company.businessprocess.category.CategoryRepository;
 import com.company.businessprocess.dto.request.ProductRequest;
 import com.company.businessprocess.dto.response.ProductResponse;
+import com.company.businessprocess.entity.CategoryEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProviderEntity;
+import com.company.businessprocess.provider.ProviderRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +18,15 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    private ProviderRepository providerRepository;
+    private CategoryRepository categoryRepository;
     private ModelMapper mapper;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper mapper) {
+    public ProductServiceImpl(ProductRepository productRepository, ProviderRepository providerRepository, CategoryRepository categoryRepository, ModelMapper mapper) {
         this.productRepository = productRepository;
+        this.providerRepository = providerRepository;
+        this.categoryRepository = categoryRepository;
         this.mapper = mapper;
     }
 
@@ -35,6 +42,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity addProduct(ProductRequest newProduct) {
         ProductEntity newEntity = mapper.map(newProduct, ProductEntity.class);
+        ProviderEntity company = providerRepository.getOne(newProduct.getCompanyId());
+        CategoryEntity category = categoryRepository.getOne(newProduct.getCategoryId());
+        newEntity.setProviderByCompany(company);
+        newEntity.setCategoryByCategoryId(category);
         return productRepository.save(newEntity);
     }
 
