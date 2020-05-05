@@ -56,6 +56,7 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
 
     @Override
     public SaleinvoiceEntity updateSaleInvoice(Integer id, SaleinvoiceEntity updateEntity) {
+
         return saleInvoiceRepository.save(updateEntity);
     }
 

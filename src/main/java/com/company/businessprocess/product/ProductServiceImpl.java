@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,8 +51,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity updateProduct(Integer id, ProductEntity updateEntity) {
-
+    public ProductEntity updateProduct(Integer id, ProductRequest updateEntity) {
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
+        if (optionalProductEntity.isPresent()) {
+            ProductEntity currentProduct = optionalProductEntity.get();
+            currentProduct = mapper.map(updateEntity, ProductEntity.class);
+            productRepository.save(currentProduct);
+        }
         return null;
     }
 
