@@ -37,12 +37,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse updateCustomer(Integer id, CustomerEntity updateEntity) {
+    public CustomerResponse updateCustomer(Integer id, CustomerRequest updateEntity) {
         Optional<CustomerEntity> optionalCustomerEntity = customerRepository.findById(id);
         if (optionalCustomerEntity.isPresent()) {
             CustomerEntity currentCustomer = optionalCustomerEntity.get();
             currentCustomer.mergeToUpdate(updateEntity);
-            return mapper.map(customerRepository.save(updateEntity), CustomerResponse.class);
+            return mapper.map(customerRepository.save(currentCustomer), CustomerResponse.class);
         }
         return null;
     }

@@ -11,7 +11,7 @@ public interface CategoryService {
 
     CategoryResponse addCategory(CategoryRequest newCategory);
 
-    CategoryResponse updateCategory(Integer id, CategoryEntity updateEntity);
+    CategoryResponse updateCategory(Integer id, CategoryRequest updateEntity);
 
     void deleteCategory(Integer id);
 }

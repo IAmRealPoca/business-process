@@ -1,6 +1,7 @@
 package com.company.businessprocess.staff;
 
 
+import com.company.businessprocess.dto.request.StaffRequest;
 import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
 import org.modelmapper.ModelMapper;
@@ -37,7 +38,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public StaffResponse updateStaff(Integer id, StaffEntity updateEntity) {
+    public StaffResponse updateStaff(Integer id, StaffRequest updateEntity) {
         Optional<StaffEntity> optionalStaffEntity = staffRepository.findById(id);
         if (optionalStaffEntity.isPresent()) {
             StaffEntity currentStaff = optionalStaffEntity.get();

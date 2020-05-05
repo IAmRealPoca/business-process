@@ -29,7 +29,7 @@ public class CustomerController {
     }
 
     @PutMapping
-    public ResponseEntity<CustomerResponse> updateCustomer(Integer id, CustomerEntity updateEntity) {
+    public ResponseEntity<CustomerResponse> updateCustomer(Integer id, CustomerRequest updateEntity) {
         return ResponseEntity.ok(customerService.updateCustomer(id, updateEntity));
     }
 

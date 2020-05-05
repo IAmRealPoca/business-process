@@ -1,5 +1,6 @@
 package com.company.businessprocess.staff;
 
+import com.company.businessprocess.dto.request.StaffRequest;
 import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class StaffController {
     }
 
     @PutMapping
-    public ResponseEntity<StaffResponse> updateStaff(Integer id, StaffEntity updateEntity) {
+    public ResponseEntity<StaffResponse> updateStaff(Integer id, StaffRequest updateEntity) {
         return ResponseEntity.ok(staffService.updateStaff(id, updateEntity));
     }
 

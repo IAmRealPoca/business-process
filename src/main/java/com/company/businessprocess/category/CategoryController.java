@@ -31,7 +31,7 @@ public class CategoryController {
 
     @PutMapping
 
-    public ResponseEntity<CategoryResponse> updateCategory(Integer id, CategoryEntity updateEntity) {
+    public ResponseEntity<CategoryResponse> updateCategory(Integer id, CategoryRequest updateEntity) {
         return ResponseEntity.ok(categoryService.updateCategory(id, updateEntity));
     }
 

@@ -29,7 +29,7 @@ public class ProviderController {
     }
 
     @PutMapping
-    public ResponseEntity<ProviderResponse> updateProvider(Integer id, ProviderEntity updateEntity) {
+    public ResponseEntity<ProviderResponse> updateProvider(Integer id, ProviderRequest updateEntity) {
         return ResponseEntity.ok(providerService.updateProvider(id, updateEntity));
     }
 

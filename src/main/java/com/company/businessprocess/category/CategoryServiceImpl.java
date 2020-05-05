@@ -40,12 +40,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse updateCategory(Integer id, CategoryEntity updateEntity) {
+    public CategoryResponse updateCategory(Integer id, CategoryRequest updateEntity) {
         Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(id);
         if (optionalCategoryEntity.isPresent()) {
             CategoryEntity currentCategory = optionalCategoryEntity.get();
             currentCategory.mergeToUpdate(updateEntity);
-            return mapper.map(categoryRepository.save(updateEntity), CategoryResponse.class);
+            return mapper.map(categoryRepository.save(currentCategory), CategoryResponse.class);
         }
         return null;
     }

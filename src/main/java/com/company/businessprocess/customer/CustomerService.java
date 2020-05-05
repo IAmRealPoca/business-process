@@ -9,7 +9,7 @@ import java.util.Collection;
 public interface CustomerService {
     Collection<CustomerResponse> getAllCustomer();
     CustomerResponse addCustomer(CustomerRequest newCustomer);
-    CustomerResponse updateCustomer (Integer id, CustomerEntity updateEntity);
+    CustomerResponse updateCustomer (Integer id, CustomerRequest updateEntity);
     void deleteCustomer (Integer id);
 
 }

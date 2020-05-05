@@ -38,7 +38,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public ProviderResponse updateProvider(Integer id, ProviderEntity updateEntity) {
+    public ProviderResponse updateProvider(Integer id, ProviderRequest updateEntity) {
         Optional<ProviderEntity> optionalProviderEntity = providerRepository.findById(id);
         if (optionalProviderEntity.isPresent()) {
             ProviderEntity currentProvider = optionalProviderEntity.get();
