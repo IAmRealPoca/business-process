@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public interface ProviderService {
     Collection<ProviderResponse> getAllProvider();
-    ProviderEntity addProvider(ProviderRequest newProvider);
-    ProviderEntity updateProvider (Integer id, ProviderEntity updateEntity);
+    ProviderResponse addProvider(ProviderRequest newProvider);
+    ProviderResponse updateProvider (Integer id, ProviderEntity updateEntity);
     void deleteProvider (Integer id);
 }

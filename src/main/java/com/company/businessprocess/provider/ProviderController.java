@@ -24,12 +24,12 @@ public class ProviderController {
         return ResponseEntity.ok(providerService.getAllProvider());
     }
     @PostMapping
-    public ResponseEntity<ProviderEntity> insertProvider(ProviderRequest newProvider) {
+    public ResponseEntity<ProviderResponse> insertProvider(ProviderRequest newProvider) {
         return ResponseEntity.ok(providerService.addProvider(newProvider));
     }
 
     @PutMapping
-    public ResponseEntity<ProviderEntity> updateProvider(Integer id, ProviderEntity updateEntity) {
+    public ResponseEntity<ProviderResponse> updateProvider(Integer id, ProviderEntity updateEntity) {
         return ResponseEntity.ok(providerService.updateProvider(id, updateEntity));
     }
 

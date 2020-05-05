@@ -25,13 +25,13 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategory());
     }
     @PostMapping
-    public ResponseEntity<CategoryEntity> insertCategory(CategoryRequest newCategory) {
+    public ResponseEntity<CategoryResponse> insertCategory(CategoryRequest newCategory) {
         return ResponseEntity.ok(categoryService.addCategory(newCategory));
     }
 
     @PutMapping
 
-    public ResponseEntity<CategoryEntity> updateCategory(Integer id, CategoryEntity updateEntity) {
+    public ResponseEntity<CategoryResponse> updateCategory(Integer id, CategoryEntity updateEntity) {
         return ResponseEntity.ok(categoryService.updateCategory(id, updateEntity));
     }
 

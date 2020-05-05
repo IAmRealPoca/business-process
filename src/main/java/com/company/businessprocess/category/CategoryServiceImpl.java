@@ -2,6 +2,7 @@ package com.company.businessprocess.category;
 
 import com.company.businessprocess.dto.request.CategoryRequest;
 import com.company.businessprocess.dto.response.CategoryResponse;
+import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.CategoryEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import org.modelmapper.ModelMapper;
@@ -33,14 +34,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity addCategory(CategoryRequest newCategory) {
+    public CategoryResponse addCategory(CategoryRequest newCategory) {
         CategoryEntity newEntity = mapper.map(newCategory, CategoryEntity.class);
-        return categoryRepository.save(newEntity);
+        return mapper.map(categoryRepository.save(newEntity), CategoryResponse.class);
     }
 
     @Override
-    public CategoryEntity updateCategory(Integer id, CategoryEntity updateEntity) {
-        return categoryRepository.save(updateEntity);
+    public CategoryResponse updateCategory(Integer id, CategoryEntity updateEntity) {
+        Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(id);
+        if (optionalCategoryEntity.isPresent()) {
+            CategoryEntity currentCategory = optionalCategoryEntity.get();
+            currentCategory.mergeToUpdate(updateEntity);
+            return mapper.map(categoryRepository.save(updateEntity), CategoryResponse.class);
+        }
+        return null;
     }
 
     @Override

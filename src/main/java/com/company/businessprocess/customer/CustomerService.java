@@ -8,8 +8,8 @@ import java.util.Collection;
 
 public interface CustomerService {
     Collection<CustomerResponse> getAllCustomer();
-    CustomerEntity addCustomer(CustomerRequest newCustomer);
-    CustomerEntity updateCustomer (Integer id, CustomerEntity updateEntity);
+    CustomerResponse addCustomer(CustomerRequest newCustomer);
+    CustomerResponse updateCustomer (Integer id, CustomerEntity updateEntity);
     void deleteCustomer (Integer id);
 
 }

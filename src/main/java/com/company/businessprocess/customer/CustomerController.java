@@ -24,12 +24,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.getAllCustomer());
     }
     @PostMapping
-    public ResponseEntity<CustomerEntity> insertCustomer(CustomerRequest newCustomer) {
+    public ResponseEntity<CustomerResponse> insertCustomer(CustomerRequest newCustomer) {
         return ResponseEntity.ok(customerService.addCustomer(newCustomer));
     }
 
     @PutMapping
-    public ResponseEntity<CustomerEntity> updateCustomer(Integer id, CustomerEntity updateEntity) {
+    public ResponseEntity<CustomerResponse> updateCustomer(Integer id, CustomerEntity updateEntity) {
         return ResponseEntity.ok(customerService.updateCustomer(id, updateEntity));
     }
 

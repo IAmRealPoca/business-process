@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,17 +32,26 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public StaffEntity addStaff(StaffEntity newEntity) {
-        return staffRepository.save(newEntity);
+    public StaffResponse addStaff(StaffEntity newEntity) {
+        return mapper.map(staffRepository.save(newEntity), StaffResponse.class);
     }
 
     @Override
-    public StaffEntity updateStaff(Integer id, StaffEntity updateEntity) {
-        return staffRepository.save(updateEntity);
+    public StaffResponse updateStaff(Integer id, StaffEntity updateEntity) {
+        Optional<StaffEntity> optionalStaffEntity = staffRepository.findById(id);
+        if (optionalStaffEntity.isPresent()) {
+            StaffEntity currentStaff = optionalStaffEntity.get();
+            currentStaff.mergeToUpdate(updateEntity);
+            return mapper.map(staffRepository.save(currentStaff), StaffResponse.class);
+        }
+        return null;
     }
 
     @Override
     public void deleteStaff(Integer id) {
-        staffRepository.deleteById(id);
+        Optional<StaffEntity> optionalStaffEntity = staffRepository.findById(id);
+        if (optionalStaffEntity.isPresent()) {
+            staffRepository.deleteById(id);
+        }
     }
 }

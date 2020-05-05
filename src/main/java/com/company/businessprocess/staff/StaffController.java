@@ -24,12 +24,12 @@ public class StaffController {
     }
 
     @PostMapping
-    public ResponseEntity<StaffEntity> insertStaff(StaffEntity newEntity) {
+    public ResponseEntity<StaffResponse> insertStaff(StaffEntity newEntity) {
         return ResponseEntity.ok(staffService.addStaff(newEntity));
     }
 
     @PutMapping
-    public ResponseEntity<StaffEntity> updateStaff(Integer id, StaffEntity updateEntity) {
+    public ResponseEntity<StaffResponse> updateStaff(Integer id, StaffEntity updateEntity) {
         return ResponseEntity.ok(staffService.updateStaff(id, updateEntity));
     }
 

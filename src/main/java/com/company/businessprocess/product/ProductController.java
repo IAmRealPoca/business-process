@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @PutMapping
-    public ResponseEntity<ProductEntity> updateProduct(Integer id, ProductRequest updateRequest) {
+    public ResponseEntity<ProductResponse> updateProduct(Integer id, ProductRequest updateRequest) {
         return ResponseEntity.ok(productService.updateProduct(id, updateRequest));
     }
 

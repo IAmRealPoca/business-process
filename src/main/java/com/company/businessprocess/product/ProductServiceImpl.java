@@ -53,14 +53,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity updateProduct(Integer id, ProductRequest updateEntity) {
+    public ProductResponse updateProduct(Integer id, ProductRequest updateEntity) {
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
         if (optionalProductEntity.isPresent()) {
             ProductEntity currentProduct = optionalProductEntity.get();
-//            ProductEntity updatedProduct = mapper.map(updateEntity, ProductEntity.class);
-//            BeanUtils.copyProperties(updateEntity, currentProduct);
             currentProduct.mergeToUpdate(updateEntity);
-            productRepository.save(currentProduct);
+            return mapper.map(productRepository.save(currentProduct), ProductResponse.class);
         }
         return null;
     }

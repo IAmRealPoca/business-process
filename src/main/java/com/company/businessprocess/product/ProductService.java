@@ -11,7 +11,7 @@ public interface ProductService {
 
     ProductResponse addProduct(ProductRequest newProduct);
 
-    ProductEntity updateProduct(Integer id, ProductRequest updateEntity);
+    ProductResponse updateProduct(Integer id, ProductRequest updateEntity);
 
     void deleteProduct(Integer id);
 }

@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface StaffService {
     Collection<StaffResponse> getAllStaff();
-    StaffEntity addStaff(StaffEntity newEntity);
-    StaffEntity updateStaff (Integer id, StaffEntity updateEntity);
+    StaffResponse addStaff(StaffEntity newEntity);
+    StaffResponse updateStaff (Integer id, StaffEntity updateEntity);
     void deleteStaff (Integer id);
 }

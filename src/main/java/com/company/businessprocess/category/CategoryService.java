@@ -9,9 +9,9 @@ import java.util.Collection;
 public interface CategoryService {
     Collection<CategoryResponse> getAllCategory();
 
-    CategoryEntity addCategory(CategoryRequest newCategory);
+    CategoryResponse addCategory(CategoryRequest newCategory);
 
-    CategoryEntity updateCategory(Integer id, CategoryEntity updateEntity);
+    CategoryResponse updateCategory(Integer id, CategoryEntity updateEntity);
 
     void deleteCategory(Integer id);
 }

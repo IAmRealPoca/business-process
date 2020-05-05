@@ -32,14 +32,20 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public ProviderEntity addProvider(ProviderRequest newProvider) {
+    public ProviderResponse addProvider(ProviderRequest newProvider) {
         ProviderEntity newEntity = mapper.map(newProvider, ProviderEntity.class);
-        return providerRepository.save(newEntity);
+        return mapper.map(providerRepository.save(newEntity), ProviderResponse.class);
     }
 
     @Override
-    public ProviderEntity updateProvider(Integer id, ProviderEntity updateEntity) {
-        return providerRepository.save(updateEntity);
+    public ProviderResponse updateProvider(Integer id, ProviderEntity updateEntity) {
+        Optional<ProviderEntity> optionalProviderEntity = providerRepository.findById(id);
+        if (optionalProviderEntity.isPresent()) {
+            ProviderEntity currentProvider = optionalProviderEntity.get();
+            currentProvider.mergeToUpdate(updateEntity);
+            return mapper.map(providerRepository.save(currentProvider), ProviderResponse.class);
+        }
+        return null;
     }
 
     @Override
