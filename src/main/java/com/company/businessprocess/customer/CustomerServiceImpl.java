@@ -1,5 +1,6 @@
 package com.company.businessprocess.customer;
 
+import com.company.businessprocess.dto.request.CustomerRequest;
 import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerEntity addCustomer(CustomerEntity newEntity) {
+    public CustomerEntity addCustomer(CustomerRequest newCustomer) {
+        CustomerEntity newEntity = mapper.map(newCustomer, CustomerEntity.class);
         return customerRepository.save(newEntity);
     }
 

@@ -1,5 +1,6 @@
 package com.company.businessprocess.productorder;
 
+import com.company.businessprocess.dto.request.ProductOrderRequest;
 import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
 import org.modelmapper.ModelMapper;
@@ -29,7 +30,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public ProductorderEntity addProductOrder(ProductorderEntity newEntity) {
+    public ProductorderEntity addProductOrder(ProductOrderRequest newProductOrder) {
+        ProductorderEntity newEntity = mapper.map(newProductOrder, ProductorderEntity.class);
         return productOrderRepository.save(newEntity);
     }
 

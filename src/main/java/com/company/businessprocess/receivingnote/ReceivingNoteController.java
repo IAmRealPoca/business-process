@@ -1,5 +1,6 @@
 package com.company.businessprocess.receivingnote;
 
+import com.company.businessprocess.dto.request.ReceivingNoteRequest;
 import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class ReceivingNoteController {
         return ResponseEntity.ok(receivingNoteService.getAllReceivingNote());
     }
     @PostMapping
-    public ResponseEntity<ReceivingnoteEntity> insertReceivingNote(ReceivingnoteEntity newEntity) {
-        return ResponseEntity.ok(receivingNoteService.addReceivingNote(newEntity));
+    public ResponseEntity<ReceivingnoteEntity> insertReceivingNote(ReceivingNoteRequest newReceivingNote) {
+        return ResponseEntity.ok(receivingNoteService.addReceivingNote(newReceivingNote));
     }
 
     @PutMapping

@@ -1,5 +1,6 @@
 package com.company.businessprocess.category;
 
+import com.company.businessprocess.dto.request.CategoryRequest;
 import com.company.businessprocess.dto.response.CategoryResponse;
 import com.company.businessprocess.entity.CategoryEntity;
 import org.modelmapper.ModelMapper;
@@ -30,7 +31,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity addCategory(CategoryEntity newEntity) {
+    public CategoryEntity addCategory(CategoryRequest newCategory) {
+        CategoryEntity newEntity = mapper.map(newCategory, CategoryEntity.class);
         return categoryRepository.save(newEntity);
     }
 

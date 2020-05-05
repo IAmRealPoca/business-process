@@ -1,5 +1,6 @@
 package com.company.businessprocess.productorder;
 
+import com.company.businessprocess.dto.request.ProductOrderRequest;
 import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class ProductOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductorderEntity> insertProductOrder(ProductorderEntity newEntity) {
-        return ResponseEntity.ok(productOrderService.addProductOrder(newEntity));
+    public ResponseEntity<ProductorderEntity> insertProductOrder(ProductOrderRequest newProductOrder) {
+        return ResponseEntity.ok(productOrderService.addProductOrder(newProductOrder));
     }
 
     @PutMapping

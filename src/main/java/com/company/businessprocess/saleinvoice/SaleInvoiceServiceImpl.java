@@ -1,5 +1,6 @@
 package com.company.businessprocess.saleinvoice;
 
+import com.company.businessprocess.dto.request.SaleInvoiceRequest;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
 import org.modelmapper.ModelMapper;
@@ -29,7 +30,8 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
     }
 
     @Override
-    public SaleinvoiceEntity addSaleInvoice(SaleinvoiceEntity newEntity) {
+    public SaleinvoiceEntity addSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
+        SaleinvoiceEntity newEntity = mapper.map(newSaleInvoice, SaleinvoiceEntity.class);
         return saleInvoiceRepository.save(newEntity);
     }
 

@@ -1,5 +1,6 @@
 package com.company.businessprocess.provider;
 
+import com.company.businessprocess.dto.request.ProviderRequest;
 import com.company.businessprocess.dto.response.ProviderResponse;
 import com.company.businessprocess.entity.ProviderEntity;
 import org.modelmapper.ModelMapper;
@@ -29,7 +30,8 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public ProviderEntity addProvider(ProviderEntity newEntity) {
+    public ProviderEntity addProvider(ProviderRequest newProvider) {
+        ProviderEntity newEntity = mapper.map(newProvider, ProviderEntity.class);
         return providerRepository.save(newEntity);
     }
 

@@ -1,7 +1,9 @@
 package com.company.businessprocess.product;
 
+import com.company.businessprocess.dto.request.ProductRequest;
 import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.ProductEntity;
+import com.company.businessprocess.entity.ProviderEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity addProduct(ProductEntity newEntity) {
+    public ProductEntity addProduct(ProductRequest newProduct) {
+        ProductEntity newEntity = mapper.map(newProduct, ProductEntity.class);
         return productRepository.save(newEntity);
     }
 
