@@ -3,7 +3,10 @@ package com.company.businessprocess.receivingnote;
 import com.company.businessprocess.dto.request.ReceivingNoteRequest;
 import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +23,8 @@ public class ReceivingNoteController {
     }
 
     @GetMapping("/get-all-receivingnote")
-    public ResponseEntity<Collection<ReceivingNoteResponse>> getAllReceivingNote() {
-        return ResponseEntity.ok(receivingNoteService.getAllReceivingNote());
+    public ResponseEntity<Page<ReceivingNoteResponse>> getAllReceivingNote(PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(receivingNoteService.getAllReceivingNote(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
     @PostMapping
     public ResponseEntity<ReceivingNoteResponse> insertReceivingNote(ReceivingNoteRequest newReceivingNote) {

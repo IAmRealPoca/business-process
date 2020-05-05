@@ -3,11 +3,11 @@ package com.company.businessprocess.staff;
 import com.company.businessprocess.dto.request.StaffRequest;
 import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
-
-import java.util.Collection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface StaffService {
-    Collection<StaffResponse> getAllStaff();
+    Page<StaffResponse> getAllStaff(Pageable pageable);
     StaffResponse addStaff(StaffEntity newEntity);
     StaffResponse updateStaff (Integer id, StaffRequest updateEntity);
     void deleteStaff (Integer id);

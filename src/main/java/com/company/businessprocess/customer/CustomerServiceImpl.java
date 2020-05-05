@@ -5,6 +5,8 @@ import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -22,12 +24,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Collection<CustomerResponse> getAllCustomer() {
-        Collection<CustomerResponse> customerResponses =
-                customerRepository.findAll().stream()
-                .map(customerEntity -> mapper.map(customerEntity, CustomerResponse.class))
-                .collect(Collectors.toList());
-        return customerResponses;
+    public Page<CustomerResponse> getAllCustomer(Pageable pageable) {
+        Page<CustomerEntity> customerResponses =                customerRepository.findAll(pageable);
+        Page<CustomerResponse> responses = customerResponses.map(customerEntity -> mapper.map(customerEntity, CustomerResponse.class));
+        return responses;
     }
 
     @Override

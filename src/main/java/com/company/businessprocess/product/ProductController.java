@@ -27,8 +27,7 @@ public class ProductController {
 
     @GetMapping("/get-all-products")
     public ResponseEntity<Page<ProductResponse>> getAllProducts(PagingAndSortingOption pagingOption) {
-        Pageable pageable = PagingAndSortingBuilder.buildPageableObj(pagingOption);
-        return ResponseEntity.ok(productService.getAllProduct(pageable));
+        return ResponseEntity.ok(productService.getAllProduct(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
 
     @PostMapping

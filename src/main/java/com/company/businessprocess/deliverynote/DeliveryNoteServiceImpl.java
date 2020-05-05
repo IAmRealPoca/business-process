@@ -12,6 +12,8 @@ import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.staff.StaffRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -35,11 +37,10 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
     }
 
     @Override
-    public Collection<DeliveryNoteResponse> getAllDeliveryNote() {
-        Collection<DeliveryNoteResponse> deliveryNoteResponses =
-                deliveryNoteRepository.findAll().stream()
-                        .map(deliverynoteEntity -> mapper.map(deliverynoteEntity, DeliveryNoteResponse.class))
-                        .collect(Collectors.toList());
+    public Page<DeliveryNoteResponse> getAllDeliveryNote(Pageable pageable) {
+        Page<DeliverynoteEntity> deliverynoteEntities = deliveryNoteRepository.findAll(pageable);
+        Page<DeliveryNoteResponse> deliveryNoteResponses =
+                        deliverynoteEntities.map(deliverynoteEntity -> mapper.map(deliverynoteEntity, DeliveryNoteResponse.class));
         return deliveryNoteResponses;
     }
 

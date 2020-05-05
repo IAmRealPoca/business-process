@@ -3,11 +3,17 @@ package com.company.businessprocess.staff;
 import com.company.businessprocess.dto.request.StaffRequest;
 import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/Staff")
@@ -20,8 +26,8 @@ public class StaffController {
     }
 
     @GetMapping("/get-all-staff")
-    public ResponseEntity<Collection<StaffResponse>> getAllStaff() {
-        return ResponseEntity.ok(staffService.getAllStaff());
+    public ResponseEntity<Page<StaffResponse>> getAllStaff(PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(staffService.getAllStaff(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
 
     @PostMapping

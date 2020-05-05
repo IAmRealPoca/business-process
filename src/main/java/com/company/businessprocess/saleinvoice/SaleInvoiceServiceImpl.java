@@ -11,6 +11,8 @@ import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.staff.StaffRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -35,11 +37,9 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
     }
 
     @Override
-    public Collection<SaleInvoiceResponse> getAllSaleInvoice() {
-        Collection<SaleInvoiceResponse> saleInvoiceResponses =
-                saleInvoiceRepository.findAll().stream()
-                        .map(saleinvoiceEntity -> mapper.map(saleinvoiceEntity, SaleInvoiceResponse.class))
-                        .collect(Collectors.toList());
+    public Page<SaleInvoiceResponse> getAllSaleInvoice(Pageable pageable) {
+        Page<SaleinvoiceEntity> saleinvoiceEntities = saleInvoiceRepository.findAll(pageable);
+        Page<SaleInvoiceResponse> saleInvoiceResponses = saleinvoiceEntities.map(saleinvoiceEntity -> mapper.map(saleinvoiceEntity, SaleInvoiceResponse.class));
         return saleInvoiceResponses;
     }
 

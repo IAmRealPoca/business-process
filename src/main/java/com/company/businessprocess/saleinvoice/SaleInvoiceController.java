@@ -3,11 +3,17 @@ package com.company.businessprocess.saleinvoice;
 import com.company.businessprocess.dto.request.SaleInvoiceRequest;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/SaleInvoice")
@@ -20,8 +26,8 @@ public class SaleInvoiceController {
     }
 
     @GetMapping("/get-all-saleinvoice")
-    public ResponseEntity<Collection<SaleInvoiceResponse>> getAllSaleInvoice() {
-        return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice());
+    public ResponseEntity<Page<SaleInvoiceResponse>> getAllSaleInvoice(PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
     @PostMapping
     public ResponseEntity<SaleInvoiceResponse> insertSaleInvoice(SaleInvoiceRequest newSaleInvoice) {

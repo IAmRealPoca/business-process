@@ -3,7 +3,10 @@ package com.company.businessprocess.productorder;
 import com.company.businessprocess.dto.request.ProductOrderRequest;
 import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +23,8 @@ public class ProductOrderController {
     }
 
     @GetMapping("/get-all-productorder")
-    public ResponseEntity<Collection<ProductOrderResponse>> getAllProductOrder() {
-        return ResponseEntity.ok(productOrderService.getAllProductOrder());
+    public ResponseEntity<Page<ProductOrderResponse>> getAllProductOrder(PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(productOrderService.getAllProductOrder(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
 
     @PostMapping

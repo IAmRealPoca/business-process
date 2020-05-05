@@ -4,11 +4,13 @@ import com.company.businessprocess.dto.request.ProductOrderRequest;
 import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
 
 public interface ProductOrderService {
-    Collection<ProductOrderResponse> getAllProductOrder();
+    Page<ProductOrderResponse> getAllProductOrder(Pageable pageable);
     ProductOrderResponse addProductOrder(ProductOrderRequest newProductOrder);
     ProductorderEntity updateProductOrder (Integer id, ProductorderEntity updateEntity);
     void deleteProductOrder (Integer id);

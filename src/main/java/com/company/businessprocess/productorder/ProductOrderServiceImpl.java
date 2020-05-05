@@ -9,6 +9,8 @@ import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.staff.StaffRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -31,11 +33,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public Collection<ProductOrderResponse> getAllProductOrder() {
-        Collection<ProductOrderResponse> productOrderResponses =
-                productOrderRepository.findAll().stream()
-                        .map(productorderEntity -> mapper.map(productorderEntity, ProductOrderResponse.class))
-                        .collect(Collectors.toList());
+    public Page<ProductOrderResponse> getAllProductOrder(Pageable pageable) {
+        Page<ProductorderEntity> productorderEntities = productOrderRepository.findAll(pageable);
+        Page<ProductOrderResponse> productOrderResponses = productorderEntities.map(productorderEntity -> mapper.map(productorderEntity, ProductOrderResponse.class));
         return productOrderResponses;
     }
 
