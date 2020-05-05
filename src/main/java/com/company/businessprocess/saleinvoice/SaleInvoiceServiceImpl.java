@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,7 +63,10 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
 
     @Override
     public void deleteSaleInvoice(Integer id) {
-        saleInvoiceRepository.deleteById(id);
+        Optional<SaleinvoiceEntity> optionalSaleinvoiceEntity = saleInvoiceRepository.findById(id);
+        if (optionalSaleinvoiceEntity.isPresent()) {
+            saleInvoiceRepository.deleteById(id);
+        }
     }
 
 }

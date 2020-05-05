@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +57,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public void deleteProductOrder(Integer id) {
-        productOrderRepository.deleteById(id);
+        Optional<ProductorderEntity> optionalProductorderEntity = productOrderRepository.findById(id);
+        if (optionalProductorderEntity.isPresent()) {
+            productOrderRepository.deleteById(id);
+        }
     }
 }

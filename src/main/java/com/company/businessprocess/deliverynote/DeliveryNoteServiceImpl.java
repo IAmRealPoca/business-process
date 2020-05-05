@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,6 +62,9 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
 
     @Override
     public void deleteDeliveryNote(Integer id) {
-        deliveryNoteRepository.deleteById(id);
+        Optional<DeliverynoteEntity> optionalDeliverynoteEntity = deliveryNoteRepository.findById(id);
+        if (optionalDeliverynoteEntity.isPresent()) {
+            deliveryNoteRepository.deleteById(id);
+        }
     }
 }

@@ -3,11 +3,13 @@ package com.company.businessprocess.category;
 import com.company.businessprocess.dto.request.CategoryRequest;
 import com.company.businessprocess.dto.response.CategoryResponse;
 import com.company.businessprocess.entity.CategoryEntity;
+import com.company.businessprocess.entity.ProductEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +45,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Integer id) {
-        categoryRepository.deleteById(id);
+        Optional<CategoryEntity> optionalCategoryEntity = categoryRepository.findById(id);
+        if (optionalCategoryEntity.isPresent()) {
+            categoryRepository.deleteById(id);
+        }
     }
 }

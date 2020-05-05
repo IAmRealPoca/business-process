@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +57,9 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
 
     @Override
     public void deleteReceivingNote(Integer id) {
-        receivingNoteRepository.deleteById(id);
+        Optional<ReceivingnoteEntity> optionalReceivingnoteEntity = receivingNoteRepository.findById(id);
+        if (optionalReceivingnoteEntity.isPresent()) {
+            receivingNoteRepository.deleteById(id);
+        }
     }
 }

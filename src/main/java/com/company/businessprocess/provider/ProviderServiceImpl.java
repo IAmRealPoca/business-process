@@ -2,11 +2,13 @@ package com.company.businessprocess.provider;
 
 import com.company.businessprocess.dto.request.ProviderRequest;
 import com.company.businessprocess.dto.response.ProviderResponse;
+import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProviderEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,6 +44,9 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public void deleteProvider(Integer id) {
-        providerRepository.deleteById(id);
+        Optional<ProviderEntity> optionalProviderEntity = providerRepository.findById(id);
+        if (optionalProviderEntity.isPresent()) {
+            providerRepository.deleteById(id);
+        }
     }
 }
