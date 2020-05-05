@@ -1,5 +1,9 @@
 package com.company.businessprocess.entity;
 
+import com.company.businessprocess.dto.request.ProviderRequest;
+import com.company.businessprocess.dto.request.StaffRequest;
+import com.company.businessprocess.utils.BusinessProcessStringUtils;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -120,5 +124,18 @@ public class ProviderEntity {
 
     public void setProductsByProviderId(Collection<ProductEntity> productsByProviderId) {
         this.productsByProviderId = productsByProviderId;
+    }
+
+    public void mergeToUpdate(Object updateObject) {
+        if (!(updateObject instanceof ProviderEntity) || !(updateObject instanceof ProviderRequest)) {
+            return;
+        }
+        ProviderRequest providerRequest = (ProviderRequest) updateObject;
+        this.name = !BusinessProcessStringUtils.isBlankAndEmpty(providerRequest.getName()) ? providerRequest.getName() : this.name;
+        this.address = !BusinessProcessStringUtils.isBlankAndEmpty(providerRequest.getAddress()) ? providerRequest.getAddress() : this.address;
+        this.phone = providerRequest.getPhone() != null ? providerRequest.getPhone() : this.phone;
+        this.email = !BusinessProcessStringUtils.isBlankAndEmpty(providerRequest.getEmail()) ? providerRequest.getEmail() : this.email;
+        this.fax = providerRequest.getFax() != null ? providerRequest.getFax() : this.fax;
+        this.contactPerson = !BusinessProcessStringUtils.isBlankAndEmpty(providerRequest.getContactPerson()) ? providerRequest.getContactPerson() : this.contactPerson;
     }
 }

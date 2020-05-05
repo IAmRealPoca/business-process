@@ -1,5 +1,9 @@
 package com.company.businessprocess.entity;
 
+import com.company.businessprocess.dto.request.CategoryRequest;
+import com.company.businessprocess.dto.request.StaffRequest;
+import com.company.businessprocess.utils.BusinessProcessStringUtils;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -126,5 +130,16 @@ public class StaffEntity {
 
     public void setSaleinvoicesByStaffId(Collection<SaleinvoiceEntity> saleinvoicesByStaffId) {
         this.saleinvoicesByStaffId = saleinvoicesByStaffId;
+    }
+
+    public void mergeToUpdate(Object updateObject) {
+        if (!(updateObject instanceof StaffEntity) || !(updateObject instanceof StaffRequest)) {
+            return;
+        }
+        StaffRequest staffRequest = (StaffRequest) updateObject;
+        this.name = !BusinessProcessStringUtils.isBlankAndEmpty(staffRequest.getName()) ? staffRequest.getName() : this.name;
+        this.address = !BusinessProcessStringUtils.isBlankAndEmpty(staffRequest.getAddress()) ? staffRequest.getAddress() : this.address;
+        this.phone = staffRequest.getPhone() != null ? staffRequest.getPhone() : this.phone;
+        this.email = !BusinessProcessStringUtils.isBlankAndEmpty(staffRequest.getEmail()) ? staffRequest.getEmail() : this.email;
     }
 }

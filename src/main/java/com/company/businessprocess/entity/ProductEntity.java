@@ -1,5 +1,8 @@
 package com.company.businessprocess.entity;
 
+import com.company.businessprocess.dto.request.ProductRequest;
+import com.company.businessprocess.utils.BusinessProcessStringUtils;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -162,5 +165,17 @@ public class ProductEntity {
 
     public void setSaleinvoicesByProductId(Collection<SaleinvoiceEntity> saleinvoicesByProductId) {
         this.saleinvoicesByProductId = saleinvoicesByProductId;
+    }
+
+    public void mergeToUpdate(Object updateObject) {
+        if (!(updateObject instanceof ProductEntity) || !(updateObject instanceof ProductRequest)) {
+            return;
+        }
+        ProductRequest productRequest = (ProductRequest) updateObject;
+        this.name = !BusinessProcessStringUtils.isBlankAndEmpty(productRequest.getName()) ? productRequest.getName() : this.name;
+        this.model = !BusinessProcessStringUtils.isBlankAndEmpty(productRequest.getModel()) ? productRequest.getModel() : this.model;
+        this.brand = !BusinessProcessStringUtils.isBlankAndEmpty(productRequest.getBrand()) ? productRequest.getBrand() : this.brand;
+        this.description = !BusinessProcessStringUtils.isBlankAndEmpty(productRequest.getDescription()) ? productRequest.getDescription() : this.description;
+        this.price = productRequest.getPrice() != null ? productRequest.getPrice() : this.price;
     }
 }

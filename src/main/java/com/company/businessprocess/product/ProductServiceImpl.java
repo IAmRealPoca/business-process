@@ -7,7 +7,9 @@ import com.company.businessprocess.entity.CategoryEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProviderEntity;
 import com.company.businessprocess.provider.ProviderRepository;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +57,9 @@ public class ProductServiceImpl implements ProductService {
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(id);
         if (optionalProductEntity.isPresent()) {
             ProductEntity currentProduct = optionalProductEntity.get();
-            currentProduct = mapper.map(updateEntity, ProductEntity.class);
+//            ProductEntity updatedProduct = mapper.map(updateEntity, ProductEntity.class);
+//            BeanUtils.copyProperties(updateEntity, currentProduct);
+            currentProduct.mergeToUpdate(updateEntity);
             productRepository.save(currentProduct);
         }
         return null;

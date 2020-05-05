@@ -1,5 +1,8 @@
 package com.company.businessprocess.entity;
 
+import com.company.businessprocess.dto.request.CategoryRequest;
+import com.company.businessprocess.utils.BusinessProcessStringUtils;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,5 +63,13 @@ public class CategoryEntity {
 
     public void setProductsByCategoryId(Collection<ProductEntity> productsByCategoryId) {
         this.productsByCategoryId = productsByCategoryId;
+    }
+
+    public void mergeToUpdate(Object updateObject) {
+        if (!(updateObject instanceof CategoryEntity) || !(updateObject instanceof CategoryRequest)) {
+            return;
+        }
+        CategoryRequest categoryRequest = (CategoryRequest) updateObject;
+        this.name = !BusinessProcessStringUtils.isBlankAndEmpty(categoryRequest.getName()) ? categoryRequest.getName() : this.name;
     }
 }

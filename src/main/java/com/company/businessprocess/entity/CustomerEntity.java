@@ -1,5 +1,9 @@
 package com.company.businessprocess.entity;
 
+import com.company.businessprocess.dto.request.CustomerRequest;
+import com.company.businessprocess.dto.request.ProviderRequest;
+import com.company.businessprocess.utils.BusinessProcessStringUtils;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -130,5 +134,18 @@ public class CustomerEntity {
 
     public void setSaleinvoicesByCustomerId(Collection<SaleinvoiceEntity> saleinvoicesByCustomerId) {
         this.saleinvoicesByCustomerId = saleinvoicesByCustomerId;
+    }
+
+    public void mergeToUpdate(Object updateObject) {
+        if (!(updateObject instanceof CustomerEntity) || !(updateObject instanceof CustomerRequest)) {
+            return;
+        }
+        CustomerRequest customerRequest = (CustomerRequest) updateObject;
+        this.name = !BusinessProcessStringUtils.isBlankAndEmpty(customerRequest.getName()) ? customerRequest.getName() : this.name;
+        this.address = !BusinessProcessStringUtils.isBlankAndEmpty(customerRequest.getAddress()) ? customerRequest.getAddress() : this.address;
+        this.phone = customerRequest.getPhone() != null ? customerRequest.getPhone() : this.phone;
+        this.email = !BusinessProcessStringUtils.isBlankAndEmpty(customerRequest.getEmail()) ? customerRequest.getEmail() : this.email;
+        this.fax = customerRequest.getFax() != null ? customerRequest.getFax() : this.fax;
+        this.contactPerson = !BusinessProcessStringUtils.isBlankAndEmpty(customerRequest.getContactPerson()) ? customerRequest.getContactPerson() : this.contactPerson;
     }
 }
