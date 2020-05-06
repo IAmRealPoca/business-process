@@ -31,8 +31,9 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public StaffResponse addStaff(StaffEntity newEntity) {
-        return mapper.map(staffRepository.save(newEntity), StaffResponse.class);
+    public StaffResponse addStaff(StaffRequest newStaffRequest) {
+        StaffEntity newStaff = mapper.map(newStaffRequest, StaffEntity.class);
+        return mapper.map(staffRepository.save(newStaff), StaffResponse.class);
     }
 
     @Override

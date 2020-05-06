@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface StaffService {
     Page<StaffResponse> getAllStaff(Pageable pageable);
-    StaffResponse addStaff(StaffEntity newEntity);
+    StaffResponse addStaff(StaffRequest newEntity);
     StaffResponse updateStaff (Integer id, StaffRequest updateEntity);
     void deleteStaff (Integer id);
 }

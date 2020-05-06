@@ -31,7 +31,7 @@ public class StaffController {
     }
 
     @PostMapping
-    public ResponseEntity<StaffResponse> insertStaff(StaffEntity newEntity) {
+    public ResponseEntity<StaffResponse> insertStaff(StaffRequest newEntity) {
         return ResponseEntity.ok(staffService.addStaff(newEntity));
     }
 
