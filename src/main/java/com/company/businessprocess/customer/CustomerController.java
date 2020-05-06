@@ -3,7 +3,10 @@ package com.company.businessprocess.customer;
 import com.company.businessprocess.dto.request.CustomerRequest;
 import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +23,15 @@ public class CustomerController {
     }
 
     @GetMapping ("/get-all-customer")
-    public ResponseEntity<Collection<CustomerResponse>> getAllCustomer() {
-        return ResponseEntity.ok(customerService.getAllCustomer());
+    public ResponseEntity<Page<CustomerResponse>> getAllCustomer(PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(customerService.getAllCustomer(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<CustomerResponse>> searchCustomer(CustomerRequest request, PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(customerService.searchCustomer(request, PagingAndSortingBuilder.buildPageableObj(pagingOption)));
+    }
+
     @PostMapping
     public ResponseEntity<CustomerResponse> insertCustomer(CustomerRequest newCustomer) {
         return ResponseEntity.ok(customerService.addCustomer(newCustomer));

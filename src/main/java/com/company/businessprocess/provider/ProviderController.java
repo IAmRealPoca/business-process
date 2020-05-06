@@ -3,7 +3,10 @@ package com.company.businessprocess.provider;
 import com.company.businessprocess.dto.request.ProviderRequest;
 import com.company.businessprocess.dto.response.ProviderResponse;
 import com.company.businessprocess.entity.ProviderEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +23,8 @@ public class ProviderController {
     }
 
     @GetMapping("/get-all-provider")
-    public ResponseEntity<Collection<ProviderResponse>> getAllProvider() {
-        return ResponseEntity.ok(providerService.getAllProvider());
+    public ResponseEntity<Page<ProviderResponse>> getAllProvider(PagingAndSortingOption option) {
+        return ResponseEntity.ok(providerService.getAllProvider(PagingAndSortingBuilder.buildPageableObj(option)));
     }
     @PostMapping
     public ResponseEntity<ProviderResponse> insertProvider(ProviderRequest newProvider) {

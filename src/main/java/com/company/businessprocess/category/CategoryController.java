@@ -3,7 +3,10 @@ package com.company.businessprocess.category;
 import com.company.businessprocess.dto.request.CategoryRequest;
 import com.company.businessprocess.dto.response.CategoryResponse;
 import com.company.businessprocess.entity.CategoryEntity;
+import com.company.businessprocess.utils.PagingAndSortingBuilder;
+import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +24,8 @@ public class CategoryController {
     }
 
     @GetMapping("/get-all-category")
-    public ResponseEntity<Collection<CategoryResponse>> getAllCategories() {
-        return ResponseEntity.ok(categoryService.getAllCategory());
+    public ResponseEntity<Page<CategoryResponse>> getAllCategories(PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(categoryService.getAllCategory(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
     @PostMapping
     public ResponseEntity<CategoryResponse> insertCategory(CategoryRequest newCategory) {

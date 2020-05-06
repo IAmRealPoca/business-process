@@ -7,6 +7,8 @@ import com.company.businessprocess.entity.CategoryEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -25,12 +27,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Collection<CategoryResponse> getAllCategory() {
-        Collection<CategoryResponse> categoryResponses =
-                categoryRepository.findAll().stream()
-                        .map(categoryEntity -> mapper.map(categoryEntity, CategoryResponse.class))
-                        .collect(Collectors.toList());
-        return categoryResponses;
+    public Page<CategoryResponse> getAllCategory(Pageable pageable) {
+        Page<CategoryEntity> categoryResponses = categoryRepository.findAll(pageable);
+        Page<CategoryResponse> responses = categoryResponses.map(categoryEntity -> mapper.map(categoryEntity, CategoryResponse.class));
+        return responses;
     }
 
     @Override

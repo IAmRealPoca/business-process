@@ -6,11 +6,11 @@ import com.company.businessprocess.dto.response.StaffResponse;
 import com.company.businessprocess.entity.StaffEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class StaffServiceImpl implements StaffService {
@@ -24,17 +24,16 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Collection<StaffResponse> getAllStaff() {
-        Collection<StaffResponse> responses =
-                staffRepository.findAll().stream()
-                        .map(staffEntity -> mapper.map(staffEntity, StaffResponse.class))
-                        .collect(Collectors.toList());
+    public Page<StaffResponse> getAllStaff(Pageable pageable) {
+        Page<StaffEntity> staffEntities = staffRepository.findAll(pageable);
+        Page<StaffResponse> responses = staffEntities.map(staffEntity -> mapper.map(staffEntity, StaffResponse.class));
         return responses;
     }
 
     @Override
-    public StaffResponse addStaff(StaffEntity newEntity) {
-        return mapper.map(staffRepository.save(newEntity), StaffResponse.class);
+    public StaffResponse addStaff(StaffRequest newStaffRequest) {
+        StaffEntity newStaff = mapper.map(newStaffRequest, StaffEntity.class);
+        return mapper.map(staffRepository.save(newStaff), StaffResponse.class);
     }
 
     @Override

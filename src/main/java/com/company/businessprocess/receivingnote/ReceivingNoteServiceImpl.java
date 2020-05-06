@@ -9,6 +9,8 @@ import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.staff.StaffRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -31,11 +33,9 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
     }
 
     @Override
-    public Collection<ReceivingNoteResponse> getAllReceivingNote() {
-        Collection<ReceivingNoteResponse> receivingNoteResponses =
-                receivingNoteRepository.findAll().stream()
-                        .map(receivingnoteEntity -> mapper.map(receivingnoteEntity, ReceivingNoteResponse.class))
-                        .collect(Collectors.toList());
+    public Page<ReceivingNoteResponse> getAllReceivingNote(Pageable pageable) {
+        Page<ReceivingnoteEntity> receivingnoteEntities = receivingNoteRepository.findAll(pageable);
+        Page<ReceivingNoteResponse> receivingNoteResponses = receivingnoteEntities.map(receivingnoteEntity -> mapper.map(receivingnoteEntity, ReceivingNoteResponse.class));
         return receivingNoteResponses;
     }
 
@@ -47,7 +47,6 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
         StaffEntity staff = staffRepository.getOne(newReceivingNote.getStaffId());
         newEntity.setStaffByStaffId(staff);
         return mapper.map(receivingNoteRepository.save(newEntity), ReceivingNoteResponse.class);
-
     }
 
     @Override

@@ -5,6 +5,8 @@ import com.company.businessprocess.dto.response.ProviderResponse;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProviderEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -23,11 +25,9 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public Collection<ProviderResponse> getAllProvider() {
-        Collection<ProviderResponse> providerResponses =
-                providerRepository.findAll().stream()
-                        .map(providerEntity -> mapper.map(providerEntity, ProviderResponse.class))
-                        .collect(Collectors.toList());
+    public Page<ProviderResponse> getAllProvider(Pageable pageable) {
+        Page<ProviderEntity> providerEntities = providerRepository.findAll(pageable);
+        Page<ProviderResponse> providerResponses =providerEntities.map(providerEntity -> mapper.map(providerEntity, ProviderResponse.class));
         return providerResponses;
     }
 

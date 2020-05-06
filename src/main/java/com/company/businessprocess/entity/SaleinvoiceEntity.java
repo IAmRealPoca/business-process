@@ -18,7 +18,7 @@ public class SaleinvoiceEntity {
     private Integer saleId;
     private Date saleDate;
     private Integer quantity;
-    private Integer totalValue;
+    private Double totalValue;
     private StaffEntity staffByStaffId;
     private ProductEntity productByProductId;
     private CustomerEntity customerByCustomerId;
@@ -56,11 +56,11 @@ public class SaleinvoiceEntity {
 
     @Basic
     @Column(name = "totalValue")
-    public Integer getTotalValue() {
+    public Double getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Integer totalValue) {
+    public void setTotalValue(Double totalValue) {
         this.totalValue = totalValue;
     }
 
