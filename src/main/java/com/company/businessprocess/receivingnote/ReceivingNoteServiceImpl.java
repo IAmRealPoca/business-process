@@ -1,7 +1,6 @@
 package com.company.businessprocess.receivingnote;
 
 import com.company.businessprocess.dto.request.ReceivingNoteRequest;
-import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
@@ -12,10 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
-import java.util.Collection;
+import java.sql.Date;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ReceivingNoteServiceImpl implements ReceivingNoteService {
@@ -36,6 +35,21 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
     public Page<ReceivingNoteResponse> getAllReceivingNote(Pageable pageable) {
         Page<ReceivingnoteEntity> receivingnoteEntities = receivingNoteRepository.findAll(pageable);
         Page<ReceivingNoteResponse> receivingNoteResponses = receivingnoteEntities.map(receivingnoteEntity -> mapper.map(receivingnoteEntity, ReceivingNoteResponse.class));
+        return receivingNoteResponses;
+    }
+
+    @Override
+    public Page<ReceivingNoteResponse> searchReceivingNote(Date beginDate, Date endDate, Pageable pageable) {
+        Page<ReceivingnoteEntity> receivingnoteEntities;
+        if (!ObjectUtils.isEmpty(beginDate)) {
+            receivingnoteEntities = receivingNoteRepository.findAllByReceiveDateAfter(beginDate, pageable);
+        } else if (!ObjectUtils.isEmpty(endDate)) {
+            receivingnoteEntities = receivingNoteRepository.findAllByReceiveDateBefore(endDate, pageable);
+        } else {
+            receivingnoteEntities = receivingNoteRepository.findAllByReceiveDateBetween(beginDate, endDate, pageable);
+        }
+        Page<ReceivingNoteResponse> receivingNoteResponses =
+                receivingnoteEntities.map(item -> mapper.map(item, ReceivingNoteResponse.class));
         return receivingNoteResponses;
     }
 

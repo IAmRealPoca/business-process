@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.CollectionUtils;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import java.util.Map;
 public class DeliveryNoteResponse {
     private Integer deliveryId;
     private Integer quantity;
+    private Date saleDate;
 
     private Map<String, Object> productInfo;
     private Map<String, Object> staffInfo;

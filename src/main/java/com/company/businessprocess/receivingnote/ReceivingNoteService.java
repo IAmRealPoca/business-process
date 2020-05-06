@@ -6,10 +6,12 @@ import com.company.businessprocess.entity.ReceivingnoteEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.Date;
 import java.util.Collection;
 
 public interface ReceivingNoteService {
     Page<ReceivingNoteResponse> getAllReceivingNote(Pageable pageable);
+    Page<ReceivingNoteResponse> searchReceivingNote(Date beginDate, Date endDate, Pageable pageable);
     ReceivingNoteResponse addReceivingNote(ReceivingNoteRequest newReceivingNote);
     ReceivingnoteEntity updateReceivingNote (Integer id, ReceivingnoteEntity updateEntity);
     void deleteReceivingNote (Integer Id);

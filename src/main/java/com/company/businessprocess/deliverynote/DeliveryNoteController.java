@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.Collection;
 
 @RestController
@@ -25,6 +26,11 @@ public class DeliveryNoteController {
     @GetMapping("/get-all-deliverynote")
     public ResponseEntity<Page<DeliveryNoteResponse>> getAllDeliveryNote(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(deliveryNoteService.getAllDeliveryNote(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<DeliveryNoteResponse>> searchDeliveryNote(Date beginDate, Date endDate, PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(deliveryNoteService.searchDeliveryNote(beginDate, endDate, PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
     @PostMapping
     public ResponseEntity<DeliveryNoteResponse> insertDeliveryNote(DeliveryNoteRequest newDeliveryNote) {

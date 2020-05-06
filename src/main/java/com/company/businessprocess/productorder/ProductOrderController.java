@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.Collection;
 
 @RestController
@@ -25,6 +26,11 @@ public class ProductOrderController {
     @GetMapping("/get-all-productorder")
     public ResponseEntity<Page<ProductOrderResponse>> getAllProductOrder(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(productOrderService.getAllProductOrder(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<ProductOrderResponse>> searchProductOrder(Date beginDate, Date endDate, PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(productOrderService.searchProductOrder(beginDate, endDate, PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
 
     @PostMapping

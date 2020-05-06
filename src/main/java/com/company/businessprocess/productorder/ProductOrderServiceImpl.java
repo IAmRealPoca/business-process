@@ -13,7 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Service
@@ -38,6 +40,21 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public Page<ProductOrderResponse> getAllProductOrder(Pageable pageable) {
         Page<ProductorderEntity> productorderEntities = productOrderRepository.findAll(pageable);
         Page<ProductOrderResponse> productOrderResponses = productorderEntities.map(productorderEntity -> mapper.map(productorderEntity, ProductOrderResponse.class));
+        return productOrderResponses;
+    }
+
+    @Override
+    public Page<ProductOrderResponse> searchProductOrder(Date beginDate, Date endDate, Pageable pageable) {
+        Page<ProductorderEntity> productorderEntities;
+        if (!ObjectUtils.isEmpty(beginDate)) {
+            productorderEntities = productOrderRepository.findAllByOrderDateAfter(beginDate, pageable);
+        } else if (!ObjectUtils.isEmpty(endDate)) {
+            productorderEntities = productOrderRepository.findAllByOrderDateBefore(endDate, pageable);
+        } else {
+            productorderEntities = productOrderRepository.findAllByOrderDateBetween(beginDate, endDate, pageable);
+        }
+        Page<ProductOrderResponse> productOrderResponses =
+                productorderEntities.map(item -> mapper.map(item, ProductOrderResponse.class));
         return productOrderResponses;
     }
 

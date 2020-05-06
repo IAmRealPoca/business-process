@@ -15,7 +15,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,6 +43,21 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
         Page<DeliverynoteEntity> deliverynoteEntities = deliveryNoteRepository.findAll(pageable);
         Page<DeliveryNoteResponse> deliveryNoteResponses =
                         deliverynoteEntities.map(deliverynoteEntity -> mapper.map(deliverynoteEntity, DeliveryNoteResponse.class));
+        return deliveryNoteResponses;
+    }
+
+    @Override
+    public Page<DeliveryNoteResponse> searchDeliveryNote(Date beginDate, Date endDate, Pageable pageable) {
+        Page<DeliverynoteEntity> deliverynoteEntities;
+        if (!ObjectUtils.isEmpty(beginDate)) {
+            deliverynoteEntities = deliveryNoteRepository.findAllBySaleDateAfter(beginDate, pageable);
+        } else if (!ObjectUtils.isEmpty(endDate)) {
+            deliverynoteEntities = deliveryNoteRepository.findAllBySaleDateBefore(endDate, pageable);
+        } else {
+            deliverynoteEntities = deliveryNoteRepository.findAllBySaleDateBetween(beginDate, endDate, pageable);
+        }
+        Page<DeliveryNoteResponse> deliveryNoteResponses =
+                deliverynoteEntities.map(deliverynoteEntity -> mapper.map(deliverynoteEntity, DeliveryNoteResponse.class));
         return deliveryNoteResponses;
     }
 

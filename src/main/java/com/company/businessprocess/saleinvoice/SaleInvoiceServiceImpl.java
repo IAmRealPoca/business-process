@@ -11,11 +11,14 @@ import com.company.businessprocess.entity.SaleinvoiceEntity;
 import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.staff.StaffRepository;
+import com.company.businessprocess.utils.BusinessProcessStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Service
@@ -41,6 +44,41 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
     @Override
     public Page<SaleInvoiceResponse> getAllSaleInvoice(Pageable pageable) {
         Page<SaleinvoiceEntity> saleinvoiceEntities = saleInvoiceRepository.findAll(pageable);
+        Page<SaleInvoiceResponse> saleInvoiceResponses = saleinvoiceEntities.map(saleinvoiceEntity -> mapper.map(saleinvoiceEntity, SaleInvoiceResponse.class));
+        return saleInvoiceResponses;
+    }
+
+    @Override
+    public Page<SaleInvoiceResponse> searchSaleInvoice(Date beginDate, Date endDate, Pageable pageable) {
+        Page<SaleinvoiceEntity> saleinvoiceEntities;
+        if (!ObjectUtils.isEmpty(beginDate)) {
+            saleinvoiceEntities = saleInvoiceRepository.findAllBySaleDateAfter(beginDate, pageable);
+        } else if (!ObjectUtils.isEmpty(endDate)) {
+            saleinvoiceEntities = saleInvoiceRepository.findAllBySaleDateBefore(endDate, pageable);
+        } else {
+            saleinvoiceEntities = saleInvoiceRepository.findAllBySaleDateBetween(beginDate, endDate, pageable);
+        }
+        Page<SaleInvoiceResponse> saleInvoiceResponses =
+                saleinvoiceEntities.map(saleinvoiceEntity -> mapper.map(saleinvoiceEntity, SaleInvoiceResponse.class));
+        return saleInvoiceResponses;
+    }
+
+    @Override
+    public Page<SaleInvoiceResponse> reportSaleInvoiceByCustomerAndStaffInDate(String customerName, String staffName, Date beginDate, Date endDate, Pageable pageable) {
+        if (BusinessProcessStringUtils.isBlankAndEmpty(customerName)) {
+            customerName = "";
+        }
+        if (BusinessProcessStringUtils.isBlankAndEmpty(staffName)) {
+            staffName = "";
+        }
+        if (ObjectUtils.isEmpty(beginDate)) {
+            beginDate = new Date(0);
+        }
+        if (ObjectUtils.isEmpty(endDate)) {
+            endDate = new Date(System.currentTimeMillis());
+        }
+        Page<SaleinvoiceEntity> saleinvoiceEntities = saleInvoiceRepository.customFindAllByCustomerAndStaffAndDate(customerName, staffName,
+                beginDate, endDate, pageable);
         Page<SaleInvoiceResponse> saleInvoiceResponses = saleinvoiceEntities.map(saleinvoiceEntity -> mapper.map(saleinvoiceEntity, SaleInvoiceResponse.class));
         return saleInvoiceResponses;
     }

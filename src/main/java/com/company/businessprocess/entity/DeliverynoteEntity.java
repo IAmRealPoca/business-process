@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +17,7 @@ import java.util.Objects;
 public class DeliverynoteEntity {
     private Integer deliveryId;
     private Integer quantity;
+    private Date saleDate;
     private ProductEntity productByProductId;
     private CustomerEntity customerByCustomerId;
     private StaffEntity staffByStaffId;
@@ -41,18 +43,29 @@ public class DeliverynoteEntity {
         this.quantity = quantity;
     }
 
+    @Basic
+    @Column(name = "saleDate")
+    public java.sql.Date getSaleDate() {
+        return saleDate;
+    }
+
+    public void setSaleDate(java.sql.Date saleDate) {
+        this.saleDate = saleDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DeliverynoteEntity that = (DeliverynoteEntity) o;
         return Objects.equals(deliveryId, that.deliveryId) &&
-                Objects.equals(quantity, that.quantity);
+                Objects.equals(quantity, that.quantity) &&
+                Objects.equals(saleDate, that.saleDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deliveryId, quantity);
+        return Objects.hash(deliveryId, quantity, saleDate);
     }
 
     @ManyToOne
