@@ -30,11 +30,11 @@ public class DeliveryNoteController {
     public ResponseEntity<DeliveryNoteResponse> insertDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
         return ResponseEntity.ok(deliveryNoteService.addDeliveryNote(newDeliveryNote));
     }
-
-    @PutMapping
-    public ResponseEntity<DeliverynoteEntity> updateDeliveryNote(Integer id, DeliverynoteEntity updateEntity) {
-        return ResponseEntity.ok(deliveryNoteService.updateDeliveryNote(id, updateEntity));
-    }
+//
+//    @PutMapping
+//    public ResponseEntity<DeliverynoteEntity> updateDeliveryNote(Integer id, DeliverynoteEntity updateEntity) {
+//        return ResponseEntity.ok(deliveryNoteService.updateDeliveryNote(id, updateEntity));
+//    }
 
     @DeleteMapping
     public ResponseEntity<String> deleteDeliveryNote(Integer id) {

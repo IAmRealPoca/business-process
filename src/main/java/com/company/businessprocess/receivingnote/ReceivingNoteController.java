@@ -31,10 +31,10 @@ public class ReceivingNoteController {
         return ResponseEntity.ok(receivingNoteService.addReceivingNote(newReceivingNote));
     }
 
-    @PutMapping
-    public ResponseEntity<ReceivingnoteEntity> updateReceivingNote(Integer id, ReceivingnoteEntity updateEntity) {
-        return ResponseEntity.ok(receivingNoteService.updateReceivingNote(id, updateEntity));
-    }
+//    @PutMapping
+//    public ResponseEntity<ReceivingnoteEntity> updateReceivingNote(Integer id, ReceivingnoteEntity updateEntity) {
+//        return ResponseEntity.ok(receivingNoteService.updateReceivingNote(id, updateEntity));
+//    }
 
     @DeleteMapping
     public ResponseEntity<String> deleteReceivingNote(Integer id) {

@@ -29,15 +29,16 @@ public class SaleInvoiceController {
     public ResponseEntity<Page<SaleInvoiceResponse>> getAllSaleInvoice(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
+
     @PostMapping
     public ResponseEntity<SaleInvoiceResponse> insertSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
         return ResponseEntity.ok(saleInvoiceService.addSaleInvoice(newSaleInvoice));
     }
 
-    @PutMapping
-    public ResponseEntity<SaleinvoiceEntity> udpateSaleInvoice(Integer id, SaleinvoiceEntity updateEntity) {
-        return ResponseEntity.ok(saleInvoiceService.updateSaleInvoice(id, updateEntity));
-    }
+//    @PutMapping
+//    public ResponseEntity<SaleinvoiceEntity> udpateSaleInvoice(Integer id, SaleinvoiceEntity updateEntity) {
+//        return ResponseEntity.ok(saleInvoiceService.updateSaleInvoice(id, updateEntity));
+//    }
 
     @DeleteMapping
     public ResponseEntity<String> deleteSaleInvoice(Integer id) {

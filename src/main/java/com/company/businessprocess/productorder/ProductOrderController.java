@@ -32,10 +32,10 @@ public class ProductOrderController {
         return ResponseEntity.ok(productOrderService.addProductOrder(newProductOrder));
     }
 
-    @PutMapping
-    public ResponseEntity<ProductorderEntity> updateProductOrder(Integer id, ProductorderEntity updateEntity) {
-        return ResponseEntity.ok(productOrderService.updateProductOrder(id, updateEntity));
-    }
+//    @PutMapping
+//    public ResponseEntity<ProductorderEntity> updateProductOrder(Integer id, ProductorderEntity updateEntity) {
+//        return ResponseEntity.ok(productOrderService.updateProductOrder(id, updateEntity));
+//    }
 
     @DeleteMapping
     public ResponseEntity<String> deleteProductOrder(Integer id) {

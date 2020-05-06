@@ -17,5 +17,4 @@ public class SaleInvoiceRequest {
     private Integer staffId;
     private Date saleDate;
     private Integer quantity;
-    private Integer totalValue;
 }

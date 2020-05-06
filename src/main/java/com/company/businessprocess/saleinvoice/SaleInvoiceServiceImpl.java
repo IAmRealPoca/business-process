@@ -1,10 +1,11 @@
 package com.company.businessprocess.saleinvoice;
 
 import com.company.businessprocess.customer.CustomerRepository;
+import com.company.businessprocess.deliverynote.DeliveryNoteRepository;
 import com.company.businessprocess.dto.request.SaleInvoiceRequest;
-import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.CustomerEntity;
+import com.company.businessprocess.entity.DeliverynoteEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
 import com.company.businessprocess.entity.StaffEntity;
@@ -15,9 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class SaleInvoiceServiceImpl implements SaleInvoiceService {
@@ -28,12 +27,15 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
     private StaffRepository staffRepository;
     private ModelMapper mapper;
 
-    public SaleInvoiceServiceImpl(SaleInvoiceRepository saleInvoiceRepository, ProductRepository productRepository, CustomerRepository customerRepository, StaffRepository staffRepository, ModelMapper mapper) {
+    private DeliveryNoteRepository deliveryNoteRepository;
+
+    public SaleInvoiceServiceImpl(SaleInvoiceRepository saleInvoiceRepository, ProductRepository productRepository, CustomerRepository customerRepository, StaffRepository staffRepository, ModelMapper mapper, DeliveryNoteRepository deliveryNoteRepository) {
         this.saleInvoiceRepository = saleInvoiceRepository;
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
         this.staffRepository = staffRepository;
         this.mapper = mapper;
+        this.deliveryNoteRepository = deliveryNoteRepository;
     }
 
     @Override
@@ -52,6 +54,14 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
         newEntity.setStaffByStaffId(staff);
         CustomerEntity customer = customerRepository.getOne(newSaleInvoice.getCustomerId());
         newEntity.setCustomerByCustomerId(customer);
+
+        //calculate total price
+        ProductEntity productEntity = productRepository.getOne(newSaleInvoice.getProductId());
+        newEntity.setTotalValue(productEntity.getPrice() * newSaleInvoice.getQuantity());
+
+        DeliverynoteEntity deliverynoteEntity = mapper.map(newEntity, DeliverynoteEntity.class);
+        deliveryNoteRepository.save(deliverynoteEntity);
+
         return mapper.map(saleInvoiceRepository.save(newEntity), SaleInvoiceResponse.class);
     }
 
