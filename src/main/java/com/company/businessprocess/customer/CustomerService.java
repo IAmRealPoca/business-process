@@ -10,6 +10,7 @@ import java.util.Collection;
 
 public interface CustomerService {
     Page<CustomerResponse> getAllCustomer(Pageable pageable);
+    Page<CustomerResponse> searchCustomer(CustomerRequest request, Pageable pageable);
     CustomerResponse addCustomer(CustomerRequest newCustomer);
     CustomerResponse updateCustomer (Integer id, CustomerRequest updateEntity);
     void deleteCustomer (Integer id);

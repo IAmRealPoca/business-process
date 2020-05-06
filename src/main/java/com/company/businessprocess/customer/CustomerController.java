@@ -26,6 +26,12 @@ public class CustomerController {
     public ResponseEntity<Page<CustomerResponse>> getAllCustomer(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(customerService.getAllCustomer(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<CustomerResponse>> searchCustomer(CustomerRequest request, PagingAndSortingOption pagingOption) {
+        return ResponseEntity.ok(customerService.searchCustomer(request, PagingAndSortingBuilder.buildPageableObj(pagingOption)));
+    }
+
     @PostMapping
     public ResponseEntity<CustomerResponse> insertCustomer(CustomerRequest newCustomer) {
         return ResponseEntity.ok(customerService.addCustomer(newCustomer));
