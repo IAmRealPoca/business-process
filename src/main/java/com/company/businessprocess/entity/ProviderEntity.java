@@ -1,7 +1,6 @@
 package com.company.businessprocess.entity;
 
 import com.company.businessprocess.dto.request.ProviderRequest;
-import com.company.businessprocess.dto.request.StaffRequest;
 import com.company.businessprocess.utils.BusinessProcessStringUtils;
 
 import javax.persistence.Basic;
@@ -16,7 +15,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "provider", schema = "company", catalog = "")
+@Table(name = "provider", schema = "companytest", catalog = "")
 public class ProviderEntity {
     private Integer providerId;
     private String name;
@@ -26,6 +25,9 @@ public class ProviderEntity {
     private String email;
     private String contactPerson;
     private Collection<ProductEntity> productsByProviderId;
+    private Collection<ProductorderEntity> productorderByProviderId;
+    private Collection<ProductorderEntity> productordersByProviderId;
+    private Collection<ReceivingnoteEntity> receivingnotesByProviderId;
 
     @Id
     @Column(name = "providerId")
@@ -126,6 +128,15 @@ public class ProviderEntity {
         this.productsByProviderId = productsByProviderId;
     }
 
+    @OneToMany(mappedBy = "providerByProviderId")
+    public Collection<ProductorderEntity> getProductorderByProviderId() {
+        return productorderByProviderId;
+    }
+
+    public void setProductorderByProviderId(Collection<ProductorderEntity> productorderByProviderId) {
+        this.productorderByProviderId = productorderByProviderId;
+    }
+
     public void mergeToUpdate(Object updateObject) {
         if (!(updateObject instanceof ProviderRequest)) {
             return;
@@ -137,5 +148,23 @@ public class ProviderEntity {
         this.email = !BusinessProcessStringUtils.isBlankAndEmpty(providerRequest.getEmail()) ? providerRequest.getEmail() : this.email;
         this.fax = providerRequest.getFax() != null ? providerRequest.getFax() : this.fax;
         this.contactPerson = !BusinessProcessStringUtils.isBlankAndEmpty(providerRequest.getContactPerson()) ? providerRequest.getContactPerson() : this.contactPerson;
+    }
+
+    @OneToMany(mappedBy = "providerByProviderId")
+    public Collection<ProductorderEntity> getProductordersByProviderId() {
+        return productordersByProviderId;
+    }
+
+    public void setProductordersByProviderId(Collection<ProductorderEntity> productordersByProviderId) {
+        this.productordersByProviderId = productordersByProviderId;
+    }
+
+    @OneToMany(mappedBy = "providerByProviderId")
+    public Collection<ReceivingnoteEntity> getReceivingnotesByProviderId() {
+        return receivingnotesByProviderId;
+    }
+
+    public void setReceivingnotesByProviderId(Collection<ReceivingnoteEntity> receivingnotesByProviderId) {
+        this.receivingnotesByProviderId = receivingnotesByProviderId;
     }
 }

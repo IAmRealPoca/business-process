@@ -8,18 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "receivingnote", schema = "company", catalog = "")
+@Table(name = "receivingnote", schema = "companytest", catalog = "")
 public class ReceivingnoteEntity {
     private Integer receiveId;
     private Date receiveDate;
-    private Integer quantity;
     private StaffEntity staffByStaffId;
-    private ProductEntity productByProductId;
+    private ProviderEntity providerByProviderId;
+    private Collection<ReceivingnotedetailEntity> receivingnotedetailsByReceiveId;
 
     @Id
     @Column(name = "receiveId")
@@ -42,29 +44,18 @@ public class ReceivingnoteEntity {
         this.receiveDate = receiveDate;
     }
 
-    @Basic
-    @Column(name = "quantity")
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReceivingnoteEntity that = (ReceivingnoteEntity) o;
         return Objects.equals(receiveId, that.receiveId) &&
-                Objects.equals(receiveDate, that.receiveDate) &&
-                Objects.equals(quantity, that.quantity);
+                Objects.equals(receiveDate, that.receiveDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(receiveId, receiveDate, quantity);
+        return Objects.hash(receiveId, receiveDate);
     }
 
     @ManyToOne
@@ -78,12 +69,21 @@ public class ReceivingnoteEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
-    public ProductEntity getProductByProductId() {
-        return productByProductId;
+    @JoinColumn(name = "providerId", referencedColumnName = "providerId", nullable = false)
+    public ProviderEntity getProviderByProviderId() {
+        return providerByProviderId;
     }
 
-    public void setProductByProductId(ProductEntity productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setProviderByProviderId(ProviderEntity providerByProviderId) {
+        this.providerByProviderId = providerByProviderId;
+    }
+
+    @OneToMany(mappedBy = "receivingnoteByReceiveId")
+    public Collection<ReceivingnotedetailEntity> getReceivingnotedetailsByReceiveId() {
+        return receivingnotedetailsByReceiveId;
+    }
+
+    public void setReceivingnotedetailsByReceiveId(Collection<ReceivingnotedetailEntity> receivingnotedetailsByReceiveId) {
+        this.receivingnotedetailsByReceiveId = receivingnotedetailsByReceiveId;
     }
 }

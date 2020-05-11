@@ -1,8 +1,10 @@
 package com.company.businessprocess.productorder;
 
+import com.company.businessprocess.dto.request.ProductOrderDetailRequest;
 import com.company.businessprocess.dto.request.ProductOrderRequest;
+import com.company.businessprocess.dto.response.ProductOrderDetailResponse;
 import com.company.businessprocess.dto.response.ProductOrderResponse;
-import com.company.businessprocess.entity.ProductorderEntity;
+import com.company.businessprocess.productorder.productorderdetail.ProductOrderDetailService;
 import com.company.businessprocess.utils.PagingAndSortingBuilder;
 import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
-import java.util.Collection;
 
 @RestController
-@RequestMapping("/ProductOrder")
+@RequestMapping("/productOrder")
 public class ProductOrderController {
     private ProductOrderService productOrderService;
 
@@ -34,7 +35,8 @@ public class ProductOrderController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductOrderResponse> insertProductOrder(ProductOrderRequest newProductOrder) {
+    public ResponseEntity<ProductOrderResponse> insertProductOrder(
+            @RequestBody ProductOrderRequest newProductOrder) {
         return ResponseEntity.ok(productOrderService.addProductOrder(newProductOrder));
     }
 

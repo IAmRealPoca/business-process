@@ -8,19 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "deliverynote", schema = "company", catalog = "")
+@Table(name = "deliverynote", schema = "companytest", catalog = "")
 public class DeliverynoteEntity {
     private Integer deliveryId;
-    private Integer quantity;
     private Date saleDate;
-    private ProductEntity productByProductId;
     private CustomerEntity customerByCustomerId;
     private StaffEntity staffByStaffId;
+    private Collection<DeliverynotedetailEntity> deliverynotedetailsByDeliveryId;
 
     @Id
     @Column(name = "deliveryId")
@@ -34,22 +35,12 @@ public class DeliverynoteEntity {
     }
 
     @Basic
-    @Column(name = "quantity")
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    @Basic
     @Column(name = "saleDate")
-    public java.sql.Date getSaleDate() {
+    public Date getSaleDate() {
         return saleDate;
     }
 
-    public void setSaleDate(java.sql.Date saleDate) {
+    public void setSaleDate(Date saleDate) {
         this.saleDate = saleDate;
     }
 
@@ -59,24 +50,14 @@ public class DeliverynoteEntity {
         if (o == null || getClass() != o.getClass()) return false;
         DeliverynoteEntity that = (DeliverynoteEntity) o;
         return Objects.equals(deliveryId, that.deliveryId) &&
-                Objects.equals(quantity, that.quantity) &&
                 Objects.equals(saleDate, that.saleDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(deliveryId, quantity, saleDate);
+        return Objects.hash(deliveryId, saleDate);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
-    public ProductEntity getProductByProductId() {
-        return productByProductId;
-    }
-
-    public void setProductByProductId(ProductEntity productByProductId) {
-        this.productByProductId = productByProductId;
-    }
 
     @ManyToOne
     @JoinColumn(name = "customerId", referencedColumnName = "customerId", nullable = false)
@@ -96,5 +77,14 @@ public class DeliverynoteEntity {
 
     public void setStaffByStaffId(StaffEntity staffByStaffId) {
         this.staffByStaffId = staffByStaffId;
+    }
+
+    @OneToMany(mappedBy = "deliverynoteByDeliveryId")
+    public Collection<DeliverynotedetailEntity> getDeliverynotedetailsByDeliveryId() {
+        return deliverynotedetailsByDeliveryId;
+    }
+
+    public void setDeliverynotedetailsByDeliveryId(Collection<DeliverynotedetailEntity> deliverynotedetailsByDeliveryId) {
+        this.deliverynotedetailsByDeliveryId = deliverynotedetailsByDeliveryId;
     }
 }

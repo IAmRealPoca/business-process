@@ -62,7 +62,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public ProductOrderResponse addProductOrder(ProductOrderRequest newProductOrder) {
         ProductorderEntity newEntity = mapper.map(newProductOrder, ProductorderEntity.class);
         ProductEntity product = productRepository.getOne(newProductOrder.getProductId());
-        newEntity.setProductByProductId(product);
         StaffEntity staff = staffRepository.getOne(newProductOrder.getStaffId());
         newEntity.setStaffByStaffId(staff);
 

@@ -8,18 +8,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "productorder", schema = "company", catalog = "")
+@Table(name = "productorder", schema = "companytest", catalog = "")
 public class ProductorderEntity {
     private Integer orderId;
     private Date orderDate;
-    private Integer quantity;
-    private ProductEntity productByProductId;
+    private ProviderEntity providerByProviderId;
     private StaffEntity staffByStaffId;
+    private Collection<ProductorderdetailEntity> productorderdetailsByOrderId;
 
     @Id
     @Column(name = "orderID")
@@ -42,39 +44,28 @@ public class ProductorderEntity {
         this.orderDate = orderDate;
     }
 
-    @Basic
-    @Column(name = "quantity")
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductorderEntity that = (ProductorderEntity) o;
         return Objects.equals(orderId, that.orderId) &&
-                Objects.equals(orderDate, that.orderDate) &&
-                Objects.equals(quantity, that.quantity);
+                Objects.equals(orderDate, that.orderDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, orderDate, quantity);
+        return Objects.hash(orderId, orderDate);
     }
 
     @ManyToOne
-    @JoinColumn(name = "productId", referencedColumnName = "productId", nullable = false)
-    public ProductEntity getProductByProductId() {
-        return productByProductId;
+    @JoinColumn(name = "providerId", referencedColumnName = "providerId", nullable = false)
+    public ProviderEntity getProviderByProviderId() {
+        return providerByProviderId;
     }
 
-    public void setProductByProductId(ProductEntity productByProductId) {
-        this.productByProductId = productByProductId;
+    public void setProviderByProviderId(ProviderEntity providerByProviderId) {
+        this.providerByProviderId = providerByProviderId;
     }
 
     @ManyToOne
@@ -85,5 +76,14 @@ public class ProductorderEntity {
 
     public void setStaffByStaffId(StaffEntity staffByStaffId) {
         this.staffByStaffId = staffByStaffId;
+    }
+
+    @OneToMany(mappedBy = "productorderByOrderId")
+    public Collection<ProductorderdetailEntity> getProductorderdetailsByOrderId() {
+        return productorderdetailsByOrderId;
+    }
+
+    public void setProductorderdetailsByOrderId(Collection<ProductorderdetailEntity> productorderdetailsByOrderId) {
+        this.productorderdetailsByOrderId = productorderdetailsByOrderId;
     }
 }

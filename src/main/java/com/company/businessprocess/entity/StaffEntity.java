@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "staff", schema = "company", catalog = "")
+@Table(name = "staff", schema = "companytest", catalog = "")
 public class StaffEntity {
     private Integer staffId;
     private String name;

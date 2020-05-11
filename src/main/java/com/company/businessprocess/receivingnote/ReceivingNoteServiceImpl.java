@@ -57,7 +57,6 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
     public ReceivingNoteResponse addReceivingNote(ReceivingNoteRequest newReceivingNote) {
         ReceivingnoteEntity newEntity = mapper.map(newReceivingNote, ReceivingnoteEntity.class);
         ProductEntity product = productRepository.getOne(newReceivingNote.getProductId());
-        newEntity.setProductByProductId(product);
         StaffEntity staff = staffRepository.getOne(newReceivingNote.getStaffId());
         newEntity.setStaffByStaffId(staff);
         return mapper.map(receivingNoteRepository.save(newEntity), ReceivingNoteResponse.class);

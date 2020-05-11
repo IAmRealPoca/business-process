@@ -34,7 +34,6 @@ public class ApplicationConfig {
     PropertyMap<DeliverynoteEntity, DeliveryNoteResponse> deliveryNoteMap = new PropertyMap<DeliverynoteEntity, DeliveryNoteResponse>() {
         @Override
         protected void configure() {
-            map().mapProductInfo(source.getProductByProductId());
 
             map().mapStaffInfo(source.getStaffByStaffId());
 
@@ -45,7 +44,7 @@ public class ApplicationConfig {
     PropertyMap<ProductorderEntity, ProductOrderResponse> productOrderMap = new PropertyMap<ProductorderEntity, ProductOrderResponse>() {
         @Override
         protected void configure() {
-            map().mapProductInfo(source.getProductByProductId());
+            map().mapProductOrderDetail(source.getProductorderdetailsByOrderId());
 
             map().mapStaffInfo(source.getStaffByStaffId());
         }
@@ -54,7 +53,6 @@ public class ApplicationConfig {
     PropertyMap<ReceivingnoteEntity, ReceivingNoteResponse> receivingNoteMap = new PropertyMap<ReceivingnoteEntity, ReceivingNoteResponse>() {
         @Override
         protected void configure() {
-            map().mapProductInfo(source.getProductByProductId());
 
             map().mapStaffInfo(source.getStaffByStaffId());
         }

@@ -15,4 +15,6 @@ public interface ReceivingNoteRepository extends JpaRepository<ReceivingnoteEnti
     Page<ReceivingnoteEntity> findAllByReceiveDateBetween(Date beginDate, Date endDate, Pageable pageable);
     Page<ReceivingnoteEntity> findAllByReceiveDateAfter(Date beginDate, Pageable pageable);
     Page<ReceivingnoteEntity> findAllByReceiveDateBefore(Date endDate, Pageable pageable);
+
+//    ReceivingnoteEntity findBy
 }

@@ -13,10 +13,11 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "saleinvoice", schema = "company", catalog = "")
+@Table(name = "saleinvoice", schema = "companytest", catalog = "")
 public class SaleinvoiceEntity {
     private Integer saleId;
     private Date saleDate;
+    private Double price;
     private Integer quantity;
     private Double totalValue;
     private StaffEntity staffByStaffId;
@@ -42,6 +43,16 @@ public class SaleinvoiceEntity {
 
     public void setSaleDate(Date saleDate) {
         this.saleDate = saleDate;
+    }
+
+    @Basic
+    @Column(name = "price", nullable = false)
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     @Basic
