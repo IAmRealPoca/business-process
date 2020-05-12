@@ -1,6 +1,5 @@
 package com.company.businessprocess.dto.response;
 
-import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProductorderdetailEntity;
 import com.company.businessprocess.entity.StaffEntity;
 import lombok.AllArgsConstructor;
@@ -26,9 +25,7 @@ public class ProductOrderResponse {
     private Date orderDate;
     private Integer quantity;
 
-//    private Map<String, Object> productOrderDetails;
     private List<Object> productOrderDetails;
-    private Map<String, Object> productInfo;
     private Map<String, Object> staffInfo;
 
     public void mapProductOrderDetail(Collection<ProductorderdetailEntity> source) {
@@ -43,15 +40,6 @@ public class ProductOrderResponse {
             productOrderDetails.add(productOrderDetail);
         }
 
-    }
-
-    public void mapProductInfo(ProductEntity source) {
-        if (CollectionUtils.isEmpty(productInfo)) {
-            productInfo = new HashMap<>();
-        }
-        productInfo.put("productId", source.getProductId());
-        productInfo.put("name", source.getName());
-        productInfo.put("price", source.getPrice());
     }
 
     public void mapStaffInfo(StaffEntity source) {

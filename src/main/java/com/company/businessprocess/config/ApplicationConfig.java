@@ -53,7 +53,7 @@ public class ApplicationConfig {
     PropertyMap<ReceivingnoteEntity, ReceivingNoteResponse> receivingNoteMap = new PropertyMap<ReceivingnoteEntity, ReceivingNoteResponse>() {
         @Override
         protected void configure() {
-
+            map().mapReceivingNoteDetailInfo(source.getReceivingnotedetailsByReceiveId());
             map().mapStaffInfo(source.getStaffByStaffId());
         }
     };
