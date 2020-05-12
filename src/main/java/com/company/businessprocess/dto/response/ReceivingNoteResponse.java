@@ -21,17 +21,8 @@ public class ReceivingNoteResponse {
     private Date receiveDate;
     private Integer quantity;
 
-    private Map<String, Object> productInfo;
     private Map<String, Object> staffInfo;
 
-    public void mapProductInfo(ProductEntity source) {
-        if (CollectionUtils.isEmpty(productInfo)) {
-            productInfo = new HashMap<>();
-        }
-        productInfo.put("productId", source.getProductId());
-        productInfo.put("name", source.getName());
-        productInfo.put("price", source.getPrice());
-    }
 
     public void mapStaffInfo(StaffEntity source) {
         if (CollectionUtils.isEmpty(staffInfo)) {

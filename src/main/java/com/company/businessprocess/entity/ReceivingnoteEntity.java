@@ -19,6 +19,7 @@ import java.util.Objects;
 public class ReceivingnoteEntity {
     private Integer receiveId;
     private Date receiveDate;
+    private Integer productOrderId;
     private StaffEntity staffByStaffId;
     private ProviderEntity providerByProviderId;
     private Collection<ReceivingnotedetailEntity> receivingnotedetailsByReceiveId;
@@ -42,6 +43,17 @@ public class ReceivingnoteEntity {
 
     public void setReceiveDate(Date receiveDate) {
         this.receiveDate = receiveDate;
+    }
+
+    @Basic
+    @Column(name = "productOrderId", nullable = false, unique = true)
+
+    public Integer getProductOrderId() {
+        return productOrderId;
+    }
+
+    public void setProductOrderId(Integer productId) {
+        this.productOrderId = productId;
     }
 
     @Override

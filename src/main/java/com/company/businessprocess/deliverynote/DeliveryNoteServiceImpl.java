@@ -64,7 +64,6 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
     @Override
     public DeliveryNoteResponse addDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
         DeliverynoteEntity newEntity = mapper.map(newDeliveryNote, DeliverynoteEntity.class);
-        ProductEntity product = productRepository.getOne(newDeliveryNote.getProductId());
         StaffEntity staff = staffRepository.getOne(newDeliveryNote.getStaffId());
         newEntity.setStaffByStaffId(staff);
         CustomerEntity customer = customerRepository.getOne(newDeliveryNote.getCustomerId());

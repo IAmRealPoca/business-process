@@ -1,4 +1,4 @@
-package com.company.businessprocess.receivingnotedetail;
+package com.company.businessprocess.receivingnote.receivingnotedetail;
 
 import com.company.businessprocess.entity.ReceivingnotedetailEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
