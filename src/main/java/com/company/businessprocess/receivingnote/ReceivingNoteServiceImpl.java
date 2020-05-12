@@ -5,9 +5,9 @@ import com.company.businessprocess.dto.response.ReceivingNoteResponse;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import com.company.businessprocess.entity.StaffEntity;
+import com.company.businessprocess.mapper.ReceivingNoteMapper;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.staff.StaffRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,19 +22,20 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
     private ReceivingNoteRepository receivingNoteRepository;
     private StaffRepository staffRepository;
     private ProductRepository productRepository;
-    private ModelMapper mapper;
+    private ReceivingNoteMapper receivingNoteMapper;
 
-    public ReceivingNoteServiceImpl(ReceivingNoteRepository receivingNoteRepository, StaffRepository staffRepository, ProductRepository productRepository, ModelMapper mapper) {
+    public ReceivingNoteServiceImpl(ReceivingNoteRepository receivingNoteRepository, StaffRepository staffRepository, ProductRepository productRepository, ReceivingNoteMapper receivingNoteMapper) {
         this.receivingNoteRepository = receivingNoteRepository;
         this.staffRepository = staffRepository;
         this.productRepository = productRepository;
-        this.mapper = mapper;
+        this.receivingNoteMapper = receivingNoteMapper;
     }
 
     @Override
     public Page<ReceivingNoteResponse> getAllReceivingNote(Pageable pageable) {
         Page<ReceivingnoteEntity> receivingnoteEntities = receivingNoteRepository.findAll(pageable);
-        Page<ReceivingNoteResponse> receivingNoteResponses = receivingnoteEntities.map(receivingnoteEntity -> mapper.map(receivingnoteEntity, ReceivingNoteResponse.class));
+        Page<ReceivingNoteResponse> receivingNoteResponses = receivingnoteEntities
+                .map(receivingnoteEntity -> receivingNoteMapper.fromEntityToResponse(receivingnoteEntity));
         return receivingNoteResponses;
     }
 
@@ -49,17 +50,17 @@ public class ReceivingNoteServiceImpl implements ReceivingNoteService {
             receivingnoteEntities = receivingNoteRepository.findAllByReceiveDateBetween(beginDate, endDate, pageable);
         }
         Page<ReceivingNoteResponse> receivingNoteResponses =
-                receivingnoteEntities.map(item -> mapper.map(item, ReceivingNoteResponse.class));
+                receivingnoteEntities.map(item -> receivingNoteMapper.fromEntityToResponse(item));
         return receivingNoteResponses;
     }
 
     @Override
     public ReceivingNoteResponse addReceivingNote(ReceivingNoteRequest newReceivingNote) {
-        ReceivingnoteEntity newEntity = mapper.map(newReceivingNote, ReceivingnoteEntity.class);
+        ReceivingnoteEntity newEntity = receivingNoteMapper.fromRequestToEntity(newReceivingNote);
         ProductEntity product = productRepository.getOne(newReceivingNote.getProductId());
         StaffEntity staff = staffRepository.getOne(newReceivingNote.getStaffId());
         newEntity.setStaffByStaffId(staff);
-        return mapper.map(receivingNoteRepository.save(newEntity), ReceivingNoteResponse.class);
+        return receivingNoteMapper.fromEntityToResponse(receivingNoteRepository.save(newEntity));
     }
 
     @Override

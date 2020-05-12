@@ -7,11 +7,12 @@ import com.company.businessprocess.entity.ProductorderEntity;
 import com.company.businessprocess.entity.ProductorderdetailEntity;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import com.company.businessprocess.entity.ReceivingnotedetailEntity;
+import com.company.businessprocess.mapper.ProductOrderDetailMapper;
+import com.company.businessprocess.mapper.ReceivingNoteDetailMapper;
 import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.productorder.ProductOrderRepository;
 import com.company.businessprocess.receivingnote.ReceivingNoteRepository;
 import com.company.businessprocess.receivingnote.receivingnotedetail.ReceivingNoteDetailRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,21 +26,24 @@ public class ProductOrderDetailServiceImpl implements ProductOrderDetailService{
     private ProductOrderRepository productOrderRepository;
     private ReceivingNoteRepository receivingNoteRepository;
     private ReceivingNoteDetailRepository receivingNoteDetailRepository;
-    private ModelMapper mapper;
+    private ProductOrderDetailMapper productOrderDetailMapper;
+    private ReceivingNoteDetailMapper receivingNoteDetailMapper;
 
-    public ProductOrderDetailServiceImpl(ProductOrderDetailRepository productOrderDetailRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository, ReceivingNoteRepository receivingNoteRepository, ReceivingNoteDetailRepository receivingNoteDetailRepository, ModelMapper mapper) {
+    public ProductOrderDetailServiceImpl(ProductOrderDetailRepository productOrderDetailRepository, ProductRepository productRepository, ProductOrderRepository productOrderRepository, ReceivingNoteRepository receivingNoteRepository, ReceivingNoteDetailRepository receivingNoteDetailRepository, ProductOrderDetailMapper productOrderDetailMapper, ReceivingNoteDetailMapper receivingNoteDetailMapper) {
         this.productOrderDetailRepository = productOrderDetailRepository;
         this.productRepository = productRepository;
         this.productOrderRepository = productOrderRepository;
         this.receivingNoteRepository = receivingNoteRepository;
         this.receivingNoteDetailRepository = receivingNoteDetailRepository;
-        this.mapper = mapper;
+        this.productOrderDetailMapper = productOrderDetailMapper;
+        this.receivingNoteDetailMapper = receivingNoteDetailMapper;
     }
 
     @Override
     public Page<ProductOrderDetailResponse> getAllProductOrderDetail(Pageable pageable) {
         Page<ProductorderdetailEntity> productorderEntities = productOrderDetailRepository.findAll(pageable);
-        Page<ProductOrderDetailResponse> productOrderResponses = productorderEntities.map(productorderEntity -> mapper.map(productorderEntity, ProductOrderDetailResponse.class));
+        Page<ProductOrderDetailResponse> productOrderResponses = productorderEntities
+                .map(productorderEntity -> productOrderDetailMapper.fromEntityToResponse(productorderEntity));
         return productOrderResponses;
     }
 
@@ -56,12 +60,12 @@ public class ProductOrderDetailServiceImpl implements ProductOrderDetailService{
         productorderdetailEntity.setProductorderByOrderId(productorderEntity);
 
         ReceivingnotedetailEntity receivingnotedetailEntity =
-                mapper.map(productorderdetailEntity, ReceivingnotedetailEntity.class);
+                receivingNoteDetailMapper.fromProdOrderDetailEntToReceivingNoteDetailEnt(productorderdetailEntity);
         ReceivingnoteEntity receivingnoteEntity = receivingNoteRepository.findByProductOrderId(productOrderId);
         receivingnotedetailEntity.setReceivingnoteByReceiveId(receivingnoteEntity);
         receivingnotedetailEntity.setProductByProductid(productEntity);
         receivingNoteDetailRepository.save(receivingnotedetailEntity);
-        return mapper.map(productOrderDetailRepository.save(productorderdetailEntity), ProductOrderDetailResponse.class);
+        return productOrderDetailMapper.fromEntityToResponse(productOrderDetailRepository.save(productorderdetailEntity));
     }
 
     @Override

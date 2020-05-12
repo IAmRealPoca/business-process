@@ -3,32 +3,29 @@ package com.company.businessprocess.customer;
 import com.company.businessprocess.dto.request.CustomerRequest;
 import com.company.businessprocess.dto.response.CustomerResponse;
 import com.company.businessprocess.entity.CustomerEntity;
-import com.company.businessprocess.entity.ProductEntity;
+import com.company.businessprocess.mapper.CustomerMapper;
 import com.company.businessprocess.utils.BusinessProcessStringUtils;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
-    private ModelMapper mapper;
+    private CustomerMapper customerMapper;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository, ModelMapper mapper) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
-        this.mapper = mapper;
+        this.customerMapper = customerMapper;
     }
 
     @Override
     public Page<CustomerResponse> getAllCustomer(Pageable pageable) {
         Page<CustomerEntity> customerEntities = customerRepository.findAll(pageable);
-        Page<CustomerResponse> responses = customerEntities.map(customerEntity -> mapper.map(customerEntity, CustomerResponse.class));
+        Page<CustomerResponse> responses = customerEntities.map(customerEntity -> customerMapper.fromEntityToResponse(customerEntity));
         return responses;
     }
 
@@ -47,14 +44,14 @@ public class CustomerServiceImpl implements CustomerService {
                     !BusinessProcessStringUtils.isBlankAndEmpty(request.getAddress()) ? "%" + request.getAddress() + "%" : "%%",
                     request.getPhone(), pageable);
         }
-        Page<CustomerResponse> responses = customerEntities.map(customerEntity -> mapper.map(customerEntity, CustomerResponse.class));
+        Page<CustomerResponse> responses = customerEntities.map(customerEntity -> customerMapper.fromEntityToResponse(customerEntity));
         return responses;
     }
 
     @Override
     public CustomerResponse addCustomer(CustomerRequest newCustomer) {
-        CustomerEntity newEntity = mapper.map(newCustomer, CustomerEntity.class);
-        return mapper.map(customerRepository.save(newEntity), CustomerResponse.class);
+        CustomerEntity newEntity = customerMapper.fromRequestToEntity(newCustomer);
+        return customerMapper.fromEntityToResponse(customerRepository.save(newEntity));
     }
 
     @Override
@@ -63,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (optionalCustomerEntity.isPresent()) {
             CustomerEntity currentCustomer = optionalCustomerEntity.get();
             currentCustomer.mergeToUpdate(updateEntity);
-            return mapper.map(customerRepository.save(currentCustomer), CustomerResponse.class);
+            return customerMapper.fromEntityToResponse(customerRepository.save(currentCustomer));
         }
         return null;
     }

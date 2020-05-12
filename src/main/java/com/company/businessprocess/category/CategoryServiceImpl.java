@@ -2,41 +2,36 @@ package com.company.businessprocess.category;
 
 import com.company.businessprocess.dto.request.CategoryRequest;
 import com.company.businessprocess.dto.response.CategoryResponse;
-import com.company.businessprocess.dto.response.ProductResponse;
 import com.company.businessprocess.entity.CategoryEntity;
-import com.company.businessprocess.entity.ProductEntity;
-import org.modelmapper.ModelMapper;
+import com.company.businessprocess.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
-    private ModelMapper mapper;
+    private CategoryMapper categoryMapper;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository, ModelMapper mapper) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.mapper = mapper;
     }
 
     @Override
     public Page<CategoryResponse> getAllCategory(Pageable pageable) {
         Page<CategoryEntity> categoryResponses = categoryRepository.findAll(pageable);
-        Page<CategoryResponse> responses = categoryResponses.map(categoryEntity -> mapper.map(categoryEntity, CategoryResponse.class));
+        Page<CategoryResponse> responses = categoryResponses.map(categoryEntity -> categoryMapper.fromEntityToResponse(categoryEntity));
         return responses;
     }
 
     @Override
     public CategoryResponse addCategory(CategoryRequest newCategory) {
-        CategoryEntity newEntity = mapper.map(newCategory, CategoryEntity.class);
-        return mapper.map(categoryRepository.save(newEntity), CategoryResponse.class);
+        CategoryEntity newEntity = categoryMapper.fromRequestToEntity(newCategory);
+        return categoryMapper.fromEntityToResponse(categoryRepository.save(newEntity));
     }
 
     @Override
@@ -45,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (optionalCategoryEntity.isPresent()) {
             CategoryEntity currentCategory = optionalCategoryEntity.get();
             currentCategory.mergeToUpdate(updateEntity);
-            return mapper.map(categoryRepository.save(currentCategory), CategoryResponse.class);
+            return categoryMapper.fromEntityToResponse(categoryRepository.save(currentCategory));
         }
         return null;
     }

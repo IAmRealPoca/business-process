@@ -2,39 +2,36 @@ package com.company.businessprocess.provider;
 
 import com.company.businessprocess.dto.request.ProviderRequest;
 import com.company.businessprocess.dto.response.ProviderResponse;
-import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.ProviderEntity;
-import org.modelmapper.ModelMapper;
+import com.company.businessprocess.mapper.ProviderMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProviderServiceImpl implements ProviderService {
 
     private ProviderRepository providerRepository;
-    private ModelMapper mapper;
+    private ProviderMapper providerMapper;
 
-    public ProviderServiceImpl(ProviderRepository providerRepository, ModelMapper mapper) {
+    public ProviderServiceImpl(ProviderRepository providerRepository, ProviderMapper providerMapper) {
         this.providerRepository = providerRepository;
-        this.mapper = mapper;
+        this.providerMapper = providerMapper;
     }
 
     @Override
     public Page<ProviderResponse> getAllProvider(Pageable pageable) {
         Page<ProviderEntity> providerEntities = providerRepository.findAll(pageable);
-        Page<ProviderResponse> providerResponses =providerEntities.map(providerEntity -> mapper.map(providerEntity, ProviderResponse.class));
+        Page<ProviderResponse> providerResponses =providerEntities.map(providerEntity -> providerMapper.fromEntityToResponse(providerEntity));
         return providerResponses;
     }
 
     @Override
     public ProviderResponse addProvider(ProviderRequest newProvider) {
-        ProviderEntity newEntity = mapper.map(newProvider, ProviderEntity.class);
-        return mapper.map(providerRepository.save(newEntity), ProviderResponse.class);
+        ProviderEntity newEntity = providerMapper.fromRequestToEntity(newProvider);
+        return providerMapper.fromEntityToResponse(providerRepository.save(newEntity));
     }
 
     @Override
@@ -43,7 +40,7 @@ public class ProviderServiceImpl implements ProviderService {
         if (optionalProviderEntity.isPresent()) {
             ProviderEntity currentProvider = optionalProviderEntity.get();
             currentProvider.mergeToUpdate(updateEntity);
-            return mapper.map(providerRepository.save(currentProvider), ProviderResponse.class);
+            return providerMapper.fromEntityToResponse(providerRepository.save(currentProvider));
         }
         return null;
     }
