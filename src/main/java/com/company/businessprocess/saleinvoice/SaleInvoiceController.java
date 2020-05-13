@@ -2,6 +2,7 @@ package com.company.businessprocess.saleinvoice;
 
 import com.company.businessprocess.dto.request.SaleInvoiceRequest;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
+import com.company.businessprocess.mybatis.CategoryMybatis;
 import com.company.businessprocess.utils.PagingAndSortingBuilder;
 import com.company.businessprocess.utils.PagingAndSortingOption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
@@ -19,10 +21,17 @@ import java.sql.Date;
 @RequestMapping("/SaleInvoice")
 public class SaleInvoiceController {
     private SaleInvoiceService saleInvoiceService;
+    private CategoryMybatis categoryMybatis;
 
     @Autowired
-    public SaleInvoiceController(SaleInvoiceService saleInvoiceService) {
+    public SaleInvoiceController(SaleInvoiceService saleInvoiceService, CategoryMybatis categoryMybatis) {
         this.saleInvoiceService = saleInvoiceService;
+        this.categoryMybatis = categoryMybatis;
+    }
+
+    @GetMapping("/test-mybatis")
+    public ResponseEntity<?> testMybatis(@RequestParam String name) {
+        return ResponseEntity.ok(categoryMybatis.findByName(name));
     }
 
     @GetMapping("/get-all-saleinvoice")
