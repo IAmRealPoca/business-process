@@ -20,7 +20,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class DeliveryNoteResponse {
     private Integer deliveryId;
-    private Integer quantity;
     private Date saleDate;
     private List<DeliveryNoteDetailResponse> deliveryNoteDetailResponses;
 

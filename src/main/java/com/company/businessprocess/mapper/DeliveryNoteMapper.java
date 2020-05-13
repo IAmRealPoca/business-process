@@ -14,7 +14,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = DeliveryNoteDetailMapper.class)
 public abstract class DeliveryNoteMapper {
     @Mappings({
-            @Mapping(target = "deliveryNoteDetailResponses", source = "deliverynotedetailsByDeliveryId")
+            @Mapping(target = "deliveryNoteDetailResponses", source = "deliverynotedetailsByDeliveryId"),
+            @Mapping(target = "saleDate", source = "saleDate")
     })
     public abstract DeliveryNoteResponse fromEntityToResponse(DeliverynoteEntity deliverynoteEntity);
     public abstract List<DeliveryNoteResponse> fromEntitiesToResponses(List<DeliverynoteEntity> deliverynoteEntities);
