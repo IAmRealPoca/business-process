@@ -27,4 +27,7 @@ public class ProductResponse {
     private String brand;
     private String description;
     private Double price;
+
+    private ProviderResponse providerResponse;
+    private CategoryResponse categoryResponse;
 }

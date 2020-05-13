@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProviderRequest {
-    private Integer providerId;
     private String name;
     private String address;
     private Integer phone;

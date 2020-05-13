@@ -7,7 +7,6 @@ import com.company.businessprocess.entity.ReceivingnoteEntity;
 import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.mapper.ProductOrderMapper;
 import com.company.businessprocess.mapper.ReceivingNoteMapper;
-import com.company.businessprocess.product.ProductRepository;
 import com.company.businessprocess.receivingnote.ReceivingNoteRepository;
 import com.company.businessprocess.staff.StaffRepository;
 import org.springframework.data.domain.Page;
@@ -21,16 +20,14 @@ import java.util.Optional;
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
     private ProductOrderRepository productOrderRepository;
-    private ProductRepository productRepository;
     private StaffRepository staffRepository;
 
     private ReceivingNoteRepository receivingNoteRepository;
     private ProductOrderMapper productOrderMapper;
     private ReceivingNoteMapper receivingNoteMapper;
 
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, ProductRepository productRepository, StaffRepository staffRepository, ReceivingNoteRepository receivingNoteRepository, ProductOrderMapper productOrderMapper, ReceivingNoteMapper receivingNoteMapper) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, StaffRepository staffRepository, ReceivingNoteRepository receivingNoteRepository, ProductOrderMapper productOrderMapper, ReceivingNoteMapper receivingNoteMapper) {
         this.productOrderRepository = productOrderRepository;
-        this.productRepository = productRepository;
         this.staffRepository = staffRepository;
         this.receivingNoteRepository = receivingNoteRepository;
         this.productOrderMapper = productOrderMapper;
@@ -65,18 +62,19 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         StaffEntity staff = staffRepository.getOne(newProductOrder.getStaffId());
         newEntity.setStaffByStaffId(staff);
 
-        ReceivingnoteEntity receivingnoteEntity = receivingNoteMapper.fromProductEntToReceivingNoteEnt(newEntity);
+        ProductorderEntity savedEntity = productOrderRepository.save(newEntity);
+        ReceivingnoteEntity receivingnoteEntity = receivingNoteMapper.fromProductEntToReceivingNoteEnt(savedEntity);
         receivingnoteEntity.setReceiveDate(newEntity.getOrderDate());
         receivingNoteRepository.save(receivingnoteEntity);
 
-        return productOrderMapper.fromEntityToResponse(productOrderRepository.save(newEntity));
+        return productOrderMapper.fromEntityToResponse(savedEntity);
     }
 
     @Override
     public ProductorderEntity updateProductOrder(Integer id, ProductorderEntity updateEntity) {
         return productOrderRepository.save(updateEntity);
     }
-    
+
 
     @Override
     public void deleteProductOrder(Integer id) {
