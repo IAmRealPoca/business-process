@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -21,33 +22,6 @@ public class DeliveryNoteResponse {
     private Integer deliveryId;
     private Integer quantity;
     private Date saleDate;
+    private List<DeliveryNoteDetailResponse> deliveryNoteDetailResponses;
 
-    private Map<String, Object> productInfo;
-    private Map<String, Object> staffInfo;
-    private Map<String, Object> customerInfo;
-
-    public void mapProductInfo(ProductEntity source) {
-        if (CollectionUtils.isEmpty(productInfo)) {
-            productInfo = new HashMap<>();
-        }
-        productInfo.put("productId", source.getProductId());
-        productInfo.put("name", source.getName());
-        productInfo.put("price", source.getPrice());
-    }
-
-    public void mapStaffInfo(StaffEntity source) {
-        if (CollectionUtils.isEmpty(staffInfo)) {
-            staffInfo = new HashMap<>();
-        }
-        staffInfo.put("staffId", source.getStaffId());
-        staffInfo.put("name", source.getName());
-    }
-
-    public void mapCustomerInfo(CustomerEntity source) {
-        if (CollectionUtils.isEmpty(customerInfo)) {
-            customerInfo = new HashMap<>();
-        }
-        customerInfo.put("customerId", source.getCustomerId());
-        customerInfo.put("name", source.getName());
-    }
 }

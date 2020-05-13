@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/productOrder/{id}/productOrderDetail")
+@RequestMapping("/product-orders/{id}/product-order-details")
 public class ProductOrderDetailController {
     private ProductOrderDetailService productOrderDetailService;
 

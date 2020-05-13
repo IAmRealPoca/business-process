@@ -6,4 +6,19 @@
         FROM Category
         WHERE name LIKE CONCAT('%',#{name},'%')
     </select>
+
+<!--    <select id="query1">-->
+<!--        SELECT hi.HireInvoiceId, e.EquipmentName, e.stock,-->
+<!--            (CASE hi.orderstatus-->
+<!--                WHEN 0 THEN 'Being hired'-->
+<!--                WHEN 1 THEN 'Refunded'-->
+<!--                WHEN 2 THEN 'Replaced'-->
+<!--            end) AS HireStatus,-->
+<!--            c.categoryname AS CategoryName-->
+<!--        FROM equipment e-->
+<!--        INNER JOIN hireinvoice hi ON hi.equipmentid = e.equipmentid-->
+<!--        INNER JOIN Category c ON c.categoryid = e.CategoryId-->
+<!--        WHERE e.EquipmentName LIKE CONCAT('%',#{name},'%')-->
+<!--            AND hi.OrderStatus = 0;-->
+<!--    </select>-->
 </mapper>

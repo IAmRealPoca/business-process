@@ -2,13 +2,16 @@ package com.company.businessprocess.saleinvoice;
 
 import com.company.businessprocess.customer.CustomerRepository;
 import com.company.businessprocess.deliverynote.DeliveryNoteRepository;
+import com.company.businessprocess.deliverynote.deliverynotedetail.DeliveryNoteDetailRepository;
 import com.company.businessprocess.dto.request.SaleInvoiceRequest;
 import com.company.businessprocess.dto.response.SaleInvoiceResponse;
 import com.company.businessprocess.entity.CustomerEntity;
 import com.company.businessprocess.entity.DeliverynoteEntity;
+import com.company.businessprocess.entity.DeliverynotedetailEntity;
 import com.company.businessprocess.entity.ProductEntity;
 import com.company.businessprocess.entity.SaleinvoiceEntity;
 import com.company.businessprocess.entity.StaffEntity;
+import com.company.businessprocess.mapper.DeliveryNoteDetailMapper;
 import com.company.businessprocess.mapper.DeliveryNoteMapper;
 import com.company.businessprocess.mapper.SaleInvoiceMapper;
 import com.company.businessprocess.product.ProductRepository;
@@ -31,17 +34,21 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
     private StaffRepository staffRepository;
     private SaleInvoiceMapper saleInvoiceMapper;
     private DeliveryNoteMapper deliveryNoteMapper;
+    private DeliveryNoteDetailMapper deliveryNoteDetailMapper;
 
     private DeliveryNoteRepository deliveryNoteRepository;
+    private DeliveryNoteDetailRepository deliveryNoteDetailRepository;
 
-    public SaleInvoiceServiceImpl(SaleInvoiceRepository saleInvoiceRepository, ProductRepository productRepository, CustomerRepository customerRepository, StaffRepository staffRepository, SaleInvoiceMapper saleInvoiceMapper, DeliveryNoteMapper deliveryNoteMapper, DeliveryNoteRepository deliveryNoteRepository) {
+    public SaleInvoiceServiceImpl(SaleInvoiceRepository saleInvoiceRepository, ProductRepository productRepository, CustomerRepository customerRepository, StaffRepository staffRepository, SaleInvoiceMapper saleInvoiceMapper, DeliveryNoteMapper deliveryNoteMapper, DeliveryNoteDetailMapper deliveryNoteDetailMapper, DeliveryNoteRepository deliveryNoteRepository, DeliveryNoteDetailRepository deliveryNoteDetailRepository) {
         this.saleInvoiceRepository = saleInvoiceRepository;
         this.productRepository = productRepository;
         this.customerRepository = customerRepository;
         this.staffRepository = staffRepository;
         this.saleInvoiceMapper = saleInvoiceMapper;
         this.deliveryNoteMapper = deliveryNoteMapper;
+        this.deliveryNoteDetailMapper = deliveryNoteDetailMapper;
         this.deliveryNoteRepository = deliveryNoteRepository;
+        this.deliveryNoteDetailRepository = deliveryNoteDetailRepository;
     }
 
     @Override
@@ -101,19 +108,28 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
 
         //calculate total price
         ProductEntity productEntity = productRepository.getOne(newSaleInvoice.getProductId());
+        newEntity.setPrice(productEntity.getPrice());
         newEntity.setTotalValue(productEntity.getPrice() * newSaleInvoice.getQuantity());
 
         DeliverynoteEntity deliverynoteEntity = deliveryNoteMapper
                 .fromSaleInvoiceEntToDeliveryNoteEnt(newEntity);
-        deliveryNoteRepository.save(deliverynoteEntity);
-
+        DeliverynoteEntity savedDeliverynoteEntity = deliveryNoteRepository.save(deliverynoteEntity);
+        DeliverynotedetailEntity deliverynotedetailEntity =
+                deliveryNoteDetailMapper.fromSaleInvoiceEntToDeliveryNoteEnt(newEntity);
+        deliverynotedetailEntity.setDeliverynoteByDeliveryId(savedDeliverynoteEntity);
+        deliveryNoteDetailRepository.save(deliverynotedetailEntity);
         return saleInvoiceMapper.fromEntityToResponse(saleInvoiceRepository.save(newEntity));
     }
 
     @Override
-    public SaleinvoiceEntity updateSaleInvoice(Integer id, SaleinvoiceEntity updateEntity) {
-
-        return saleInvoiceRepository.save(updateEntity);
+    public SaleInvoiceResponse updateSaleInvoicePrice(Integer id, Double price) {
+        Optional<SaleinvoiceEntity> optionalSaleinvoiceEntity = saleInvoiceRepository.findById(id);
+        if (optionalSaleinvoiceEntity.isPresent()) {
+            SaleinvoiceEntity saleinvoiceEntity = optionalSaleinvoiceEntity.get();
+            saleinvoiceEntity.setPrice(price);
+            return saleInvoiceMapper.fromEntityToResponse(saleInvoiceRepository.save(saleinvoiceEntity));
+        }
+        return null;
     }
 
     @Override

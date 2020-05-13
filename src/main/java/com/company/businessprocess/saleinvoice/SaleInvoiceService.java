@@ -15,6 +15,6 @@ public interface SaleInvoiceService {
     Page<SaleInvoiceResponse> reportSaleInvoiceByCustomerAndStaffInDate(String customerName, String staffName,
                                                                         Date beginDate, Date endDate, Pageable pageable);
     SaleInvoiceResponse addSaleInvoice(SaleInvoiceRequest newSaleInvoice);
-    SaleinvoiceEntity updateSaleInvoice (Integer id, SaleinvoiceEntity updateEntity);
+    SaleInvoiceResponse updateSaleInvoicePrice(Integer id, Double price);
     void deleteSaleInvoice (Integer id);
 }

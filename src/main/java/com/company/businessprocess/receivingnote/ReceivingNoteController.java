@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/ReceivingNote")
+@RequestMapping("/receiving-notes")
 public class ReceivingNoteController {
     private ReceivingNoteService receivingNoteService;
 
@@ -23,7 +23,7 @@ public class ReceivingNoteController {
         this.receivingNoteService = receivingNoteService;
     }
 
-    @GetMapping("/get-all-receivingnote")
+    @GetMapping("/get-all")
     public ResponseEntity<Page<ReceivingNoteResponse>> getAllReceivingNote(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(receivingNoteService.getAllReceivingNote(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
@@ -34,7 +34,8 @@ public class ReceivingNoteController {
     }
 
     @PostMapping
-    public ResponseEntity<ReceivingNoteResponse> insertReceivingNote(ReceivingNoteRequest newReceivingNote) {
+    public ResponseEntity<ReceivingNoteResponse> insertReceivingNote(
+            @RequestBody ReceivingNoteRequest newReceivingNote) {
         return ResponseEntity.ok(receivingNoteService.addReceivingNote(newReceivingNote));
     }
 
@@ -43,8 +44,8 @@ public class ReceivingNoteController {
 //        return ResponseEntity.ok(receivingNoteService.updateReceivingNote(id, updateEntity));
 //    }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteReceivingNote(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteReceivingNote(@PathVariable("id")Integer id) {
         receivingNoteService.deleteReceivingNote(id);
         return ResponseEntity.ok("Deleted");
     }

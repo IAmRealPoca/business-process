@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 
 @RestController
-@RequestMapping("/productOrder")
+@RequestMapping("/product-orders")
 public class ProductOrderController {
     private ProductOrderService productOrderService;
 
@@ -24,7 +24,7 @@ public class ProductOrderController {
         this.productOrderService = productOrderService;
     }
 
-    @GetMapping("/get-all-productorder")
+    @GetMapping("/get-all")
     public ResponseEntity<Page<ProductOrderResponse>> getAllProductOrder(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(productOrderService.getAllProductOrder(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
@@ -45,8 +45,8 @@ public class ProductOrderController {
 //        return ResponseEntity.ok(productOrderService.updateProductOrder(id, updateEntity));
 //    }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteProductOrder(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteProductOrder(@PathVariable("id") Integer id) {
         productOrderService.deleteProductOrder(id);
         return ResponseEntity.ok("Deleted");
     }

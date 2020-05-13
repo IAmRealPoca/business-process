@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping ("/Customer")
+@RequestMapping ("/customers")
 public class CustomerController {
     private CustomerService customerService;
 
@@ -22,7 +22,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping ("/get-all-customer")
+    @GetMapping ("/get-all")
     public ResponseEntity<Page<CustomerResponse>> getAllCustomer(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(customerService.getAllCustomer(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
@@ -33,17 +33,20 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponse> insertCustomer(CustomerRequest newCustomer) {
+    public ResponseEntity<CustomerResponse> insertCustomer(
+            @RequestBody CustomerRequest newCustomer) {
         return ResponseEntity.ok(customerService.addCustomer(newCustomer));
     }
 
-    @PutMapping
-    public ResponseEntity<CustomerResponse> updateCustomer(Integer id, CustomerRequest updateEntity) {
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponse> updateCustomer(
+            @PathVariable("id") Integer id,
+            @RequestBody CustomerRequest updateEntity) {
         return ResponseEntity.ok(customerService.updateCustomer(id, updateEntity));
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteCustomer(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable("id") Integer id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.ok("Deleted");
     }

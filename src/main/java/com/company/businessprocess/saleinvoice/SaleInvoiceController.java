@@ -10,15 +10,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 
 @RestController
-@RequestMapping("/SaleInvoice")
+@RequestMapping("/sale-invoices")
 public class SaleInvoiceController {
     private SaleInvoiceService saleInvoiceService;
     private CategoryMybatis categoryMybatis;
@@ -28,13 +30,13 @@ public class SaleInvoiceController {
         this.saleInvoiceService = saleInvoiceService;
         this.categoryMybatis = categoryMybatis;
     }
+//
+//    @GetMapping("/test-mybatis")
+//    public ResponseEntity<?> testMybatis(@RequestParam String name) {
+//        return ResponseEntity.ok(categoryMybatis.findByName(name));
+//    }
 
-    @GetMapping("/test-mybatis")
-    public ResponseEntity<?> testMybatis(@RequestParam String name) {
-        return ResponseEntity.ok(categoryMybatis.findByName(name));
-    }
-
-    @GetMapping("/get-all-saleinvoice")
+    @GetMapping("/get-all")
     public ResponseEntity<Page<SaleInvoiceResponse>> getAllSaleInvoice(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(saleInvoiceService.getAllSaleInvoice(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
@@ -60,17 +62,20 @@ public class SaleInvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<SaleInvoiceResponse> insertSaleInvoice(SaleInvoiceRequest newSaleInvoice) {
+    public ResponseEntity<SaleInvoiceResponse> insertSaleInvoice(
+            @RequestBody SaleInvoiceRequest newSaleInvoice) {
         return ResponseEntity.ok(saleInvoiceService.addSaleInvoice(newSaleInvoice));
     }
 
-//    @PutMapping
-//    public ResponseEntity<SaleinvoiceEntity> udpateSaleInvoice(Integer id, SaleinvoiceEntity updateEntity) {
-//        return ResponseEntity.ok(saleInvoiceService.updateSaleInvoice(id, updateEntity));
-//    }
+    @PutMapping("/{id}/price")
+    public ResponseEntity<SaleInvoiceResponse> udpateSaleInvoicePrice(
+            Integer id,
+            @RequestBody Double price) {
+        return ResponseEntity.ok(saleInvoiceService.updateSaleInvoicePrice(id, price));
+    }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteSaleInvoice(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSaleInvoice(@PathVariable("id") Integer id) {
         saleInvoiceService.deleteSaleInvoice(id);
         return ResponseEntity.ok("Deleted");
     }

@@ -2,14 +2,16 @@
 //
 //import com.company.businessprocess.deliverynote.DeliveryNoteRepository;
 //import com.company.businessprocess.dto.request.ProductOrderDetailRequest;
+//import com.company.businessprocess.dto.response.DeliveryNoteResponse;
 //import com.company.businessprocess.dto.response.ProductOrderDetailResponse;
+//import com.company.businessprocess.entity.DeliverynoteEntity;
 //import com.company.businessprocess.entity.ProductEntity;
 //import com.company.businessprocess.entity.ProductorderEntity;
 //import com.company.businessprocess.entity.ProductorderdetailEntity;
+//import com.company.businessprocess.mapper.DeliveryNoteMapper;
 //import com.company.businessprocess.productorder.ProductOrderRepository;
 //import com.company.businessprocess.receivingnote.ReceivingNoteRepository;
 //import com.company.businessprocess.receivingnote.receivingnotedetail.ReceivingNoteDetailRepository;
-//import org.modelmapper.ModelMapper;
 //import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.Pageable;
 //import org.springframework.stereotype.Service;
@@ -23,20 +25,21 @@
 //    private ProductOrderRepository productOrderRepository;
 //    private ReceivingNoteRepository receivingNoteRepository;
 //    private ReceivingNoteDetailRepository receivingNoteDetailRepository;
-//    private ModelMapper mapper;
+//    private DeliveryNoteMapper deliveryNoteMapper;
 //
-//    public DeliveryNoteDetailServiceImpl(DeliveryNoteDetailRepository productOrderDetailRepository, DeliveryNoteRepository productRepository, ProductOrderRepository productOrderRepository, ReceivingNoteRepository receivingNoteRepository, ReceivingNoteDetailRepository receivingNoteDetailRepository, ModelMapper mapper) {
+//    public DeliveryNoteDetailServiceImpl(DeliveryNoteDetailRepository productOrderDetailRepository, DeliveryNoteRepository productRepository, ProductOrderRepository productOrderRepository, ReceivingNoteRepository receivingNoteRepository, ReceivingNoteDetailRepository receivingNoteDetailRepository, DeliveryNoteMapper deliveryNoteMapper) {
 //        this.deliveryNoteDetailRepository = productOrderDetailRepository;
 //        this.deliveryNoteRepository = productRepository;
 //        this.productOrderRepository = productOrderRepository;
 //        this.receivingNoteRepository = receivingNoteRepository;
 //        this.receivingNoteDetailRepository = receivingNoteDetailRepository;
-//        this.mapper = mapper;
+//        this.deliveryNoteMapper = deliveryNoteMapper;
 //    }
 //
 //    @Override
-//    public Page<ProductOrderDetailResponse> getAllProductOrderDetail(Pageable pageable) {
-//        Page<ProductorderdetailEntity> productorderEntities = deliveryNoteDetailRepository.findAll(pageable);
+//    public Page<DeliveryNoteResponse> getAllProductOrderDetail(Pageable pageable) {
+//        Page<DeliverynoteEntity> productorderEntities =
+//                deliveryNoteDetailRepository.findAll(pageable);
 //        Page<ProductOrderDetailResponse> productOrderResponses = productorderEntities.map(productorderEntity -> mapper.map(productorderEntity, ProductOrderDetailResponse.class));
 //        return productOrderResponses;
 //    }

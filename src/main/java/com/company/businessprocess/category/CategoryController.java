@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(path = "/category")
+@RequestMapping(path = "/categories")
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -23,23 +23,27 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/get-all-category")
+    @GetMapping("/get-all")
     public ResponseEntity<Page<CategoryResponse>> getAllCategories(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(categoryService.getAllCategory(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
+
     @PostMapping
-    public ResponseEntity<CategoryResponse> insertCategory(CategoryRequest newCategory) {
+    public ResponseEntity<CategoryResponse> insertCategory(
+            @RequestBody CategoryRequest newCategory) {
         return ResponseEntity.ok(categoryService.addCategory(newCategory));
     }
 
-    @PutMapping
-
-    public ResponseEntity<CategoryResponse> updateCategory(Integer id, CategoryRequest updateEntity) {
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponse> updateCategory(
+            @PathVariable("id") Integer id,
+            @RequestBody CategoryRequest updateEntity) {
         return ResponseEntity.ok(categoryService.updateCategory(id, updateEntity));
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteCategory(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCategory(
+            @PathVariable("id") Integer id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok("Deleted");
     }

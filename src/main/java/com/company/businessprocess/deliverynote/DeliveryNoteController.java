@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/DeliveryNote")
+@RequestMapping("/delivery-notes")
 public class DeliveryNoteController {
     private DeliveryNoteService deliveryNoteService;
 
@@ -23,7 +23,7 @@ public class DeliveryNoteController {
         this.deliveryNoteService = deliveryNoteService;
     }
 
-    @GetMapping("/get-all-deliverynote")
+    @GetMapping("/get-all")
     public ResponseEntity<Page<DeliveryNoteResponse>> getAllDeliveryNote(PagingAndSortingOption pagingOption) {
         return ResponseEntity.ok(deliveryNoteService.getAllDeliveryNote(PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
@@ -33,7 +33,8 @@ public class DeliveryNoteController {
         return ResponseEntity.ok(deliveryNoteService.searchDeliveryNote(beginDate, endDate, PagingAndSortingBuilder.buildPageableObj(pagingOption)));
     }
     @PostMapping
-    public ResponseEntity<DeliveryNoteResponse> insertDeliveryNote(DeliveryNoteRequest newDeliveryNote) {
+    public ResponseEntity<DeliveryNoteResponse> insertDeliveryNote(
+            @RequestBody DeliveryNoteRequest newDeliveryNote) {
         return ResponseEntity.ok(deliveryNoteService.addDeliveryNote(newDeliveryNote));
     }
 //
@@ -42,8 +43,8 @@ public class DeliveryNoteController {
 //        return ResponseEntity.ok(deliveryNoteService.updateDeliveryNote(id, updateEntity));
 //    }
 
-    @DeleteMapping
-    public ResponseEntity<String> deleteDeliveryNote(Integer id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDeliveryNote(@PathVariable("id") Integer id) {
         deliveryNoteService.deleteDeliveryNote(id);
         return ResponseEntity.ok("Deleted");
     }

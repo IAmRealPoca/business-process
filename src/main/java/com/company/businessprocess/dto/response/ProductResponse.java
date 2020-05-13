@@ -27,23 +27,4 @@ public class ProductResponse {
     private String brand;
     private String description;
     private Double price;
-
-    private Map<String, Object> companyInfo;
-    private Map<String, Object> categoryInfo;
-
-    public void mapCompanyInfo(ProviderEntity source) {
-        if (CollectionUtils.isEmpty(companyInfo)) {
-            companyInfo = new HashMap<>();
-        }
-        companyInfo.put("providerId", source.getProviderId());
-        companyInfo.put("name", source.getName());
-    }
-
-    public void mapCategoryInfo(CategoryEntity source) {
-        if (CollectionUtils.isEmpty(categoryInfo)) {
-            categoryInfo = new HashMap<>();
-        }
-        categoryInfo.put("categoryId", source.getCategoryId());
-        categoryInfo.put("name", source.getName());
-    }
 }
