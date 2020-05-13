@@ -111,13 +111,15 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
         newEntity.setPrice(productEntity.getPrice());
         newEntity.setTotalValue(productEntity.getPrice() * newSaleInvoice.getQuantity());
 
-        DeliverynoteEntity deliverynoteEntity = deliveryNoteMapper
-                .fromSaleInvoiceEntToDeliveryNoteEnt(newEntity);
-        DeliverynoteEntity savedDeliverynoteEntity = deliveryNoteRepository.save(deliverynoteEntity);
-        DeliverynotedetailEntity deliverynotedetailEntity =
-                deliveryNoteDetailMapper.fromSaleInvoiceEntToDeliveryNoteEnt(newEntity);
-        deliverynotedetailEntity.setDeliverynoteByDeliveryId(savedDeliverynoteEntity);
-        deliveryNoteDetailRepository.save(deliverynotedetailEntity);
+
+        //don't remove this yet, because of ambiguous requirement
+//        DeliverynoteEntity deliverynoteEntity = deliveryNoteMapper
+//                .fromSaleInvoiceEntToDeliveryNoteEnt(newEntity);
+//        DeliverynoteEntity savedDeliverynoteEntity = deliveryNoteRepository.save(deliverynoteEntity);
+//        DeliverynotedetailEntity deliverynotedetailEntity =
+//                deliveryNoteDetailMapper.fromSaleInvoiceEntToDeliveryNoteEnt(newEntity);
+//        deliverynotedetailEntity.setDeliverynoteByDeliveryId(savedDeliverynoteEntity);
+//        deliveryNoteDetailRepository.save(deliverynotedetailEntity);
         return saleInvoiceMapper.fromEntityToResponse(saleInvoiceRepository.save(newEntity));
     }
 
@@ -127,6 +129,7 @@ public class SaleInvoiceServiceImpl implements SaleInvoiceService {
         if (optionalSaleinvoiceEntity.isPresent()) {
             SaleinvoiceEntity saleinvoiceEntity = optionalSaleinvoiceEntity.get();
             saleinvoiceEntity.setPrice(price);
+            saleinvoiceEntity.setTotalValue(price * saleinvoiceEntity.getQuantity());
             return saleInvoiceMapper.fromEntityToResponse(saleInvoiceRepository.save(saleinvoiceEntity));
         }
         return null;

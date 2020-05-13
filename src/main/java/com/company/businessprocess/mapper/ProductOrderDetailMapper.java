@@ -7,9 +7,14 @@ import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
 import com.company.businessprocess.entity.ProductorderdetailEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProductMapper.class})
 public abstract class ProductOrderDetailMapper {
+    @Mappings({
+            @Mapping(target = "productInfo", source = "productByProductId")
+    })
     public abstract ProductOrderDetailResponse fromEntityToResponse(ProductorderdetailEntity productorderdetailEntity);
     public abstract ProductorderdetailEntity fromRequestToEntity(ProductOrderDetailRequest productOrderDetailRequest);
 }

@@ -73,7 +73,7 @@ public class ProductEntity {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = "description", length = 20000)
     public String getDescription() {
         return description;
     }

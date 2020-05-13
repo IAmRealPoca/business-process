@@ -1,19 +1,17 @@
-package com.company.businessprocess.dto.response;
+package com.company.businessprocess.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Map;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductOrderDetailResponse {
-    private Integer productOrderDetailId;
+public class DeliveryNoteDetailRequest {
     private Integer quantity;
     private Double price;
-    private ProductResponse productInfo;
+    private Integer productId;
+    private Integer deliveryNoteId;
 }

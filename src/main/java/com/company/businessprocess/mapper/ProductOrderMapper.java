@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProductOrderDetailMapper.class})
 public abstract class ProductOrderMapper {
     @Mappings({
             @Mapping(target = "productOrderDetails", source = "productorderdetailsByOrderId"),

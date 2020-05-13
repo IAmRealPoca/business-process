@@ -13,4 +13,5 @@ public class ReceivingNoteDetailResponse {
     private Integer receiveDetailId;
     private Integer quantity;
     private Double price;
+    private ProductResponse productResponse;
 }
