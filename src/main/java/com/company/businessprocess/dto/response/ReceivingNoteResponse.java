@@ -25,4 +25,6 @@ public class ReceivingNoteResponse {
     private Date receiveDate;
 
     private List<ReceivingNoteDetailResponse> receivingNoteDetailResponses;
+    private StaffResponse staffInfo;
+    private ProviderResponse providerInfo;
 }

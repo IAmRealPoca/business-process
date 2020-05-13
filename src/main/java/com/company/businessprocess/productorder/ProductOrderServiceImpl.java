@@ -3,10 +3,12 @@ package com.company.businessprocess.productorder;
 import com.company.businessprocess.dto.request.ProductOrderRequest;
 import com.company.businessprocess.dto.response.ProductOrderResponse;
 import com.company.businessprocess.entity.ProductorderEntity;
+import com.company.businessprocess.entity.ProviderEntity;
 import com.company.businessprocess.entity.ReceivingnoteEntity;
 import com.company.businessprocess.entity.StaffEntity;
 import com.company.businessprocess.mapper.ProductOrderMapper;
 import com.company.businessprocess.mapper.ReceivingNoteMapper;
+import com.company.businessprocess.provider.ProviderRepository;
 import com.company.businessprocess.receivingnote.ReceivingNoteRepository;
 import com.company.businessprocess.staff.StaffRepository;
 import org.springframework.data.domain.Page;
@@ -14,21 +16,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ProductOrderServiceImpl implements ProductOrderService {
     private ProductOrderRepository productOrderRepository;
     private StaffRepository staffRepository;
+    private ProviderRepository providerRepository;
 
     private ReceivingNoteRepository receivingNoteRepository;
     private ProductOrderMapper productOrderMapper;
     private ReceivingNoteMapper receivingNoteMapper;
 
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, StaffRepository staffRepository, ReceivingNoteRepository receivingNoteRepository, ProductOrderMapper productOrderMapper, ReceivingNoteMapper receivingNoteMapper) {
+    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository, StaffRepository staffRepository, ProviderRepository providerRepository, ReceivingNoteRepository receivingNoteRepository, ProductOrderMapper productOrderMapper, ReceivingNoteMapper receivingNoteMapper) {
         this.productOrderRepository = productOrderRepository;
         this.staffRepository = staffRepository;
+        this.providerRepository = providerRepository;
         this.receivingNoteRepository = receivingNoteRepository;
         this.productOrderMapper = productOrderMapper;
         this.receivingNoteMapper = receivingNoteMapper;
@@ -61,10 +67,13 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         ProductorderEntity newEntity = productOrderMapper.fromRequestToEntity(newProductOrder);
         StaffEntity staff = staffRepository.getOne(newProductOrder.getStaffId());
         newEntity.setStaffByStaffId(staff);
-
+        ProviderEntity providerEntity = providerRepository.getOne(newProductOrder.getProviderId());
+        newEntity.setProviderByProviderId(providerEntity);
         ProductorderEntity savedEntity = productOrderRepository.save(newEntity);
         ReceivingnoteEntity receivingnoteEntity = receivingNoteMapper.fromProductEntToReceivingNoteEnt(savedEntity);
+//        receivingnoteEntity.setProductOrderId(savedEntity.getOrderId());
         receivingnoteEntity.setReceiveDate(newEntity.getOrderDate());
+        receivingnoteEntity.setProviderByProviderId(providerEntity);
         receivingNoteRepository.save(receivingnoteEntity);
 
         return productOrderMapper.fromEntityToResponse(savedEntity);

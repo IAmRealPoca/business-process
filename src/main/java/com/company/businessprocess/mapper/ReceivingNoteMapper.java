@@ -11,11 +11,18 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring", uses = ReceivingNoteDetailMapper.class)
 public abstract class ReceivingNoteMapper {
     @Mappings({
-            @Mapping(target = "receivingNoteDetailResponses", source = "receivingnotedetailsByReceiveId")
+            @Mapping(target = "receivingNoteDetailResponses", source = "receivingnotedetailsByReceiveId"),
+            @Mapping(target = "staffInfo", source = "staffByStaffId"),
+            @Mapping(target = "providerInfo", source = "providerByProviderId")
     })
     public abstract ReceivingNoteResponse fromEntityToResponse(ReceivingnoteEntity receivingnoteEntity);
 
     public abstract ReceivingnoteEntity fromRequestToEntity(ReceivingNoteRequest receivingNoteRequest);
 
+    @Mappings({
+            @Mapping(target = "receiveId", source = "orderId"),
+            @Mapping(target = "productOrderId", source = "orderId"),
+            @Mapping(target = "receiveDate", source = "orderDate")
+    })
     public abstract ReceivingnoteEntity fromProductEntToReceivingNoteEnt(ProductorderEntity productorderEntity);
 }

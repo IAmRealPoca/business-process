@@ -25,28 +25,7 @@ public class ProductOrderResponse {
     private Date orderDate;
     private Integer quantity;
 
-    private List<Object> productOrderDetails;
-    private Map<String, Object> staffInfo;
-
-    public void mapProductOrderDetail(Collection<ProductorderdetailEntity> source) {
-        if (CollectionUtils.isEmpty(productOrderDetails)) {
-            productOrderDetails = new ArrayList<>();
-        }
-        for (ProductorderdetailEntity entity : source) {
-            Map<String, Object> productOrderDetail = new HashMap<>();
-            productOrderDetail.put("productOrderDetailId", entity.getProductOrderDetailId());
-            productOrderDetail.put("quantity", entity.getQuantity());
-            productOrderDetail.put("price", entity.getPrice());
-            productOrderDetails.add(productOrderDetail);
-        }
-
-    }
-
-    public void mapStaffInfo(StaffEntity source) {
-        if (CollectionUtils.isEmpty(staffInfo)) {
-            staffInfo = new HashMap<>();
-        }
-        staffInfo.put("staffId", source.getStaffId());
-        staffInfo.put("name", source.getName());
-    }
+    private List<ProductOrderDetailResponse> productOrderDetails;
+    private StaffResponse staffInfo;
+    private ProviderResponse providerInfo;
 }

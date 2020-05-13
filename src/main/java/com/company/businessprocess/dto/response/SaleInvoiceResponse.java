@@ -20,8 +20,9 @@ import java.util.Map;
 public class SaleInvoiceResponse {
     private Integer saleId;
     private Date saleDate;
+    private Double price;
     private Integer quantity;
-    private Integer totalValue;
+    private Double totalValue;
     private ProductResponse productResponse;
     private StaffResponse staffResponse;
     private CustomerResponse customerResponse;
